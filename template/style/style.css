@@ -2,9 +2,10 @@
 .navbar-brand{
     font-family: 'Fasthand', cursive;
 }
+/* login ragister page  */
 body{
-    background-color: #130f40;
-    color: #fff;
+    background-color: #130f40 !important;
+    color: #fff !important;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -24,4 +25,82 @@ body{
     padding: 40px;
     background-color: #fff;
     margin-top: 15vh;
+}
+/*  password :valid */
+/* Style all input fields */
+input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+  }
+  
+  /* Style the submit button */
+  input[type=submit] {
+    background-color: #04AA6D;
+    color: white;
+  }
+  /* The message box is shown when the user clicks on the password field */
+  #message {
+    display:none;
+    background: #130f40;
+    color: #000;
+    position: relative;
+    margin-top:5px;
+  }
+  
+  #message p {
+    font-size: 14px;
+    display: block;
+    text-align: start;
+  }
+  
+  /* Add a green text color and a checkmark when the requirements are right */
+  .valid {
+    color: green;
+  }
+  
+  .valid:before {
+    position: relative;
+    left: -35px;
+    content: "✔";
+  }
+  
+  /* Add a red text color and an "x" when the requirements are wrong */
+  .invalid {
+    color: red;
+  }
+  
+  .invalid:before {
+    position: relative;
+    left: -35px;
+    content: "✖";
+  }
+
+/* password hidden */
+.svg{
+    width: 20%;
+}
+.showIn{
+  position: relative;
+}
+.show{
+  position: absolute;
+  right:0;
+  top:12px;
+}
+svg{
+  color: green;
+  font-size: 25px;
+}
+ /*  error show style  */
+#gmailErr{
+  line-height: 0;
+}
+
+#passErr{
+  line-height: 0;
 }

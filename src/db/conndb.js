@@ -1,6 +1,5 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
-var validator = require("validator");
 // const { default: isEmail } = require("validator/lib/isEmail");
 
 main()
@@ -24,20 +23,11 @@ const newSchema = new mongoose.Schema({
     unique: true,
     type:String,
     required:true,
-    validate(val){
-      if (!validator.isEmail(val)) {
-        throw new Error("Gmail Not validate");
-      }
-    }},
+  },
   pass: {
     type:String,
-    minLength:4,
-    validate(val) {
-      if (!validator.isStrongPassword(val)){
-        console.log(val)
-        throw new Error("Password not validate");
-         }}
-   },
+    required:true
+  },
   repass: String,
 });
 

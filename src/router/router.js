@@ -12,14 +12,6 @@ router.get('/login',(req,res)=>{
 router.get('/create',(req,res)=>{
     res.render("create",{title:title})
 })
-// router.use((err,req,res,next)=>{
-//     if(err){
-//     }else{
-//         res.status(500).send(err.message)
-//         console.log(err)
-//         next()
-//     }
-// })
 
 
 

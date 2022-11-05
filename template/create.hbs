@@ -8,7 +8,7 @@
     <title>{{title}}</title>
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="style/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <script src="https://kit.fontawesome.com/322eaf11a5.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -21,41 +21,45 @@
                     <form class="row g-3" method="post" action="/create" enctype="multipart/form-data">
                         <div class="col-md-12">
                             <label class="form-label">User Name</label>
-                            <input type="text" class="form-control" id="userName" name="userName"
-                            required>
+                            <input type="text" class="form-control" id="userName" name="userName" required>
                             <p class="text-danger" id="nameErr">{{userError}}</p>
                         </div>
                         <div class="col-md-12">
                             <label class="form-label">Full Name</label>
-                            <input type="text" class="form-control" id="fullName" name="fullName"
-                            required>
+                            <input type="text" class="form-control" id="fullName" name="fullName" required>
                         </div>
                         <div class="col-12">
                             <label class="form-label">Gmail</label>
-                            <input type="gmail" class="form-control" id="gmail" name="gmail"
-                            required>
+                            <input type="email" class="form-control" id="gmail" name="gmail" required>
                             <p class="text-danger" id="gmailErr">{{gmailError}}</p>
                         </div>
                         <div class="col-6">
                             <label for="inputAddress2" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="pass" name="pass"
-                            required>
+                            <div class="input d-flex showIn">
+                                <input type="password" class="form-control " id="pass" type="password" name="pass" value="Fas7895"
+                                    required>
+                                <span class="show" id="passSpan"><i class="fa-solid fa-eye"></i></span>
+                            </div>
                         </div>
-                        <div class="col-6">
-                            <label class="form-label">Re-Password</label>
-                            <input type="password" class="form-control" id="repass" name="repass" value=".adgjmFas7895@"
-                            required>
-                        </div>
-                        <div class="col-12">
-                            <label class="form-label">Password  should be <b>8 latter,1 small latter, 1 capital latter, 1 number, 1 symbol</b>
 
-                                minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1
+                        <div class="col-6">
+                            <label class="form-label">Re-Enter</label>
+                            <input type="password" class="form-control" id="repass" name="repass" value="Fas7895" required>
+                        </div>
+                        <p class="text-danger" id="passErr">{{passError}}</p>
+                        <div class="col-12">
+                            <div id="message">
+                                <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
+                                <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
+                                <p id="number" class="invalid">A <b>number</b></p>
+                                <p id="length" class="invalid">Minimum <b>6 characters</b></p>
+                            </div>
                             </label>
                         </div>
                         <div class="col-12">
                             <label class="form-label">Upload your image</label>
                             <input type="file" class="form-control" id="file" name="file">
-                            </div>
+                        </div>
                         <div class="col-12">
                             <button type="submit" class="btn btn-primary">Create Account</button>
                         </div>
@@ -83,8 +87,8 @@
         </div>
     </div>
     {{>bottom}}
-
     <script src="style/coustom.js"></script>
+
 </body>
 
 </html>
