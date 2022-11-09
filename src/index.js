@@ -3,15 +3,17 @@ const express = require('express');
 const app = express();
 require("./db/conndb");
 const userouter = require('./router/router');
-const userouterPost = require('./router/userouterPost');
 const hbs = require("hbs");
 const path = require("path");
+const cors = require("cors");
+var bodyParser = require('body-parser');
 
 const port = process.env.openPort || process.env.port
 
 // file set
+app.use(cors());
+app.use(bodyParser.json());
 app.use(express.urlencoded());
-app.use(express.json());
 app.use(express.static("public"))
 app.use(('/bootstrap'),express.static(path.join(__dirname,"./../node_modules/bootstrap/dist")))
 app.use(('/style'),express.static(path.join(__dirname,"./../template/style")))
@@ -28,7 +30,8 @@ hbs.registerPartials(hbsPartials);
 app.use(('/'),userouter);
 app.use(('/login'),userouter);
 app.use(('/create'),userouter);
-app.post(('/create'),userouterPost);
+app.post(('/create'),userouter);
+app.use(('/user'),userouter);
 // app.use(('/create'),)
 app.get(("*"),((req,res)=>{
     res.render("error")

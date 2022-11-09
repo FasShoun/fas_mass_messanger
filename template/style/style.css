@@ -20,11 +20,10 @@ body{
     line-height: 1.8rem;
 }
 #err{
-    width: 100%;
-    height: 100vh;
-    padding: 40px;
+    width: 70%;
+    height: 70vh;
+    margin: 40px auto;
     background-color: #fff;
-    margin-top: 15vh;
 }
 /*  password :valid */
 /* Style all input fields */
@@ -103,4 +102,54 @@ svg{
 
 #passErr{
   line-height: 0;
+}
+
+/* user page  */
+.box{
+  width: 60vw;
+  height: 250vh;
+  background-color: #00000089;
+  margin: 100px auto;
+  padding: 25px;
+}
+thead,tbody tr{
+  color: #fff !important;
+}
+/* fasmass style */
+.main{
+  width: 100%;
+  height: 100vh;
+  margin: 20px 0;
+  flex-direction: column;
+}
+.all_user{
+  background-color: green;
+  width: 80%;
+  height:10vh;
+  margin: auto;
+  padding: 16px;
+  margin-top: 20px;
+}
+.mess_box{
+  width: 70%;
+  height: 65vh;
+  background-color: #04AA6D;
+  padding: 5vh 3vw 0 3vw;
+  overflow: auto;
+}
+.messLeft{
+  text-align:left;
+  margin-right:10%;
+}
+.messRight{
+  text-align: right;
+  margin-left: 10%;
+}
+.mess_box b{
+  border-bottom: 1px solid rebeccapurple;
+}
+
+/* send input style */
+.send_btn{
+  margin-top: 6px;
 }

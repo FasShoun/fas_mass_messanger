@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+</head>
+
+<body>
+    {{!-- welcome bar --}}
+    <div class="all_user d-flex flex-row justify-content-between">
+        <div class="userinfo">
+            <p>Welcome:: {{name}}</p>
+        </div>
+        <div class="adduser">
+            <p>Add more message</p>
+        </div>
+        <div class="userSeting">
+            <p>Logout more settig</p>
+        </div>
+    </div>
+    {{!-- message send bar  --}}
+    <div class="main d-flex justify-content-center align-items-center">
+        <div id="mess_box" class="mess_box">
+            {{!-- left-right message  --}}
+            <div class="messLeft">
+                <b class="text-primary">Foysal</b>
+                <br>
+                hi
+            </div>
+            <div class="messRight">
+                <b class="text-primary">Shoun</b>
+                <br>
+                hello
+            </div>
+        <div class="abableChack">
+
+        </div>
+        </div>
+        {{!-- message send input  --}}
+        
+    </div>
+    <div class="send d-flex col-6">
+            <input type="text" class="form-control " id="send" placeholder="Type..." required>
+            <span class="send_btn" id="passSpan"><button id="sendBtn" class="btn btn-danger" type="submit">Send</button></span>
+        </div> 
+
+    <script src="style/messSend.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

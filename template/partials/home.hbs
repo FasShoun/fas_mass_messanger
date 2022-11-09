@@ -6,15 +6,20 @@
   <div class="row gx-5">
     <div class="col-12 col-md-6">
       <div class="mt-5 p-5">
-        <form class="row g-3">
+        <form class="row g-3" action="login" method="post">
           <div class="col-md-12">
             <label class="form-label">User Name or Email</label>
-            <input type="text" class="form-control" id="userName" name="userName">
+            <input type="text" class="form-control" id="userName" name="userName" required>
           </div>
+            <p class="text-danger text-center">{{userError}}</p>
           <div class="col-12">
             <label for="inputAddress2" class="form-label">Password</label>
-            <input type="password" class="form-control" id="pass" name="pass">
+            <div class="input d-flex showIn">
+              <input type="password" class="form-control " id="pass" name="pass" required>
+              <span class="show" id="passSpan"><i class="fa-solid fa-eye"></i></span>
+            </div>
           </div>
+            <p class=" text-danger text-center">{{passError}}</p>
           <div class="col-12">
             <button type="submit" class="btn btn-primary">Sign in</button>
           </div>
@@ -27,15 +32,25 @@
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
           <div class="carousel-inner">
             <div class="carousel-item active">
-              <img src="styleFiles/bg1.svg" class="d-block w-100 img-fluid" alt="...">
+              <img src="styleFiles/bg1.svg" class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item">
-              <img src="styleFiles/bg1.svg" class="d-block w-100 img-fluid" alt="...">
+              <img src="styleFiles/bg2.svg" class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item">
-              <img src="styleFiles/bg1.svg" class="d-block w-100 img-fluid" alt="...">
+              <img src="styleFiles/bg3.svg" class="d-block w-100" alt="...">
             </div>
           </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
         </div>
       </div>
     </div>
