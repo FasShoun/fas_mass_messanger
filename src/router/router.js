@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-const upload = require("./ragister/img_upload_conf");
-const imageUpload = require("./ragister/image_upload");
+
+// const upload = require("./ragister/img_upload_conf");
+// const imageUpload = require("./ragister/image_upload");
 const createAccountRequire = require('./ragister/create_require');
 const loginVerify = require("./login/loginVerify");
 const dataApi = require("./dataAPi");
@@ -33,11 +34,7 @@ router.get('/fasMess', fasMass,(req,res)=>{
 
 // --post mathod
 router.post("/create",createAccountRequire,(req,res)=>{
-});
-// imageUpload
-// upload.single("avator"),
-
-// --login post
+})
 router.post('/login', loginVerify,(req,res)=>{
 })
 module.exports = router;

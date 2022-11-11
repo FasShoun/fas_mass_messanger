@@ -21,7 +21,7 @@ let getApi = async ()=>{
         })
     }catch(err){
         console.log(err)
-        alert("Fatch error Fixed correct URL plz")
+        alert("possibly the prooblem is Fatch URL error or mongodb server off")
     }
 }
 getApi()

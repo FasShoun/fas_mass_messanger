@@ -17,6 +17,7 @@ const loginVerify = async (req, res, next) => {
     } else {
       res.render("login", { passError: passError });
     }
+    next();
   } catch (err) {
     res.render("login", { userError: userError });
   }
