@@ -5,7 +5,7 @@ const passErr = document.getElementById("passErr");
 const userError = document.getElementById("userError");
 const passError = document.getElementById("passError");
 setTimeout(() => {
-  if (alert || passAlert || passError) {
+  if (alert || passError || passError) {
     alert.style.display = "none";
     userError.style.display = "none";
     passError.style.display = "none";

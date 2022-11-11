@@ -10,16 +10,16 @@
           <div class="col-md-12">
             <label class="form-label">User Name or Email</label>
             <input type="text" class="form-control" id="userName" name="userName" required>
+            <p id="userError" class="text-danger text-center">{{userError}}</p>
           </div>
-            <p class="text-danger text-center">{{userError}}</p>
           <div class="col-12">
             <label for="inputAddress2" class="form-label">Password</label>
             <div class="input d-flex showIn">
               <input type="password" class="form-control " id="pass" name="pass" required>
               <span class="show" id="passSpan"><i class="fa-solid fa-eye"></i></span>
             </div>
+            <p id="passError" class=" text-danger text-center">{{passError}}</p>
           </div>
-            <p class=" text-danger text-center">{{passError}}</p>
           <div class="col-12">
             <button type="submit" class="btn btn-primary">Sign in</button>
           </div>
