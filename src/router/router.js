@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+const author = require('./login/verify_user');
 
 // const upload = require("./ragister/img_upload_conf");
 // const imageUpload = require("./ragister/image_upload");
@@ -10,12 +10,12 @@ const dataApi = require("./dataAPi");
 const fasMass = require("./fasMass");
 // --get items
 const title =  "Welcome to secure messanger"
- router.get('/',(req,res)=>{
-    res.render("index",{title:title})
+ router.get('/',author,(req,res)=>{
+    // author for already login user ro not
 })
 // --login
-router.get('/login',(req,res)=>{
-    res.render("login",{title:title});
+router.get('/login',author,(req,res)=>{
+    // author for already login user ro not
 })
 //--create
 router.get('/create',(req,res)=>{
