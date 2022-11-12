@@ -15,7 +15,7 @@ const title =  "Welcome to secure messanger"
 })
 // --login
 router.get('/login',(req,res)=>{
-    res.render("login",{title:title})
+    res.render("login",{title:title});
 })
 //--create
 router.get('/create',(req,res)=>{
@@ -28,13 +28,13 @@ router.get('/user:789',(req,res)=>{
 })
 router.get('/api:789', dataApi,(req,res)=>{
 })
-router.get('/fasMess', fasMass,(req,res)=>{
-})
+// router.get('/fasMess',fasMass,(req,res)=>{
+// })
 // ------}
 
 // --post mathod
 router.post("/create",createAccountRequire,(req,res)=>{
 })
-router.post('/login', loginVerify,(req,res)=>{
+router.post('/login',loginVerify,(req,res)=>{
 })
 module.exports = router;
