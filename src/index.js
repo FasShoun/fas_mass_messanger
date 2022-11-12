@@ -27,12 +27,7 @@ const hbsPartials = path.join(__dirname,"../template/partials");
 hbs.registerPartials(hbsPartials);
 
 // routing
-app.use(('/'),userouter);
-app.use(('/login'),userouter);
-app.use(('/create'),userouter);
-app.post(('/create'),userouter);
-app.use(('/user'),userouter);
-// app.use(('/create'),)
+app.use(userouter);
 app.get(("*"),((req,res)=>{
     res.render("error")
 }))
