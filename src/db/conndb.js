@@ -2,10 +2,7 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 var uniqueValidator = require('mongoose-unique-validator');
-
-
 main();
-
 async function main() {
   try {
     await mongoose.connect(process.env.mongodbConnect);
@@ -56,4 +53,3 @@ newSchema.pre("save", async function(req, res, next) {
 const goData = mongoose.model("fas_messanger", newSchema);
 
 module.exports = goData;
-// newSchema

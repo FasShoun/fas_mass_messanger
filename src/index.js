@@ -7,6 +7,7 @@ const hbs = require("hbs");
 const path = require("path");
 const cors = require("cors");
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser')
 
 const port = process.env.openPort || process.env.port
 
@@ -17,7 +18,7 @@ app.use(express.urlencoded());
 app.use(express.static("public"))
 app.use(('/bootstrap'),express.static(path.join(__dirname,"./../node_modules/bootstrap/dist")))
 app.use(('/style'),express.static(path.join(__dirname,"./../template/style")))
-
+app.use(cookieParser());
 
 // view engine hbs render
 app.set('view engine', 'hbs');
