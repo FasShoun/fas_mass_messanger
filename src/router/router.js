@@ -7,7 +7,7 @@ const author = require('./login/verify_user');
 const createAccountRequire = require('./ragister/create_require');
 const loginVerify = require("./login/loginVerify");
 const dataApi = require("./dataAPi");
-const fasMass = require("./fasMass");
+const logout = require("./login/logout");
 // --get items
 const title =  "Welcome to secure messanger"
  router.get('/',author,(req,res)=>{
@@ -21,6 +21,9 @@ router.get('/login',author,(req,res)=>{
 router.get('/create',(req,res)=>{
     res.render("create",{title:title})
 })
+//-- logout
+router.get('/logout',author,logout,(req,res)=>{
+});
 
 // {------- hidden page
 router.get('/user:789',(req,res)=>{
@@ -28,9 +31,6 @@ router.get('/user:789',(req,res)=>{
 })
 router.get('/api:789', dataApi,(req,res)=>{
 })
-// router.get('/fasMess',fasMass,(req,res)=>{
-// })
-// ------}
 
 // --post mathod
 router.post("/create",createAccountRequire,(req,res)=>{
