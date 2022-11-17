@@ -11,9 +11,6 @@ var cookieParser = require('cookie-parser')
 
 const port = process.env.openPort || process.env.port
 
-// file set
-// app.use(cors());
-// app.use(bodyParser.json());
 app.use(express.urlencoded());
 app.use(express.static("public"))
 app.use(('/bootstrap'),express.static(path.join(__dirname,"./../node_modules/bootstrap/dist")))
