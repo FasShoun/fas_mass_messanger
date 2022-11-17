@@ -1,20 +1,19 @@
 const goData = require("./../../db/conndb");
+const  jwt= require("jsonwebtoken");
 
 const imageUpload = async (req, res, next) => {
   try {
-    const avatorGet = req.file;
-    console.log(avatorGet) 
-    const imgSave = new goData({
-      fileUp: {
-        fileName: req.file.filename,
-        fileType: req.file.mimetype,
-        fileSize: req.file.size,
-        fileDestination: req.file.destination
-      },
-    });
-    console.log("File up loging");
-    await imgSave.save();
-    console.log("File up successfull");
+    const genToken = await req.cookies.jwt;
+    const id = await jwt.verify(genToken,process.env.jwtGen);
+    const getId = await goData.findOne({_id:id});
+    let a = await goData.updateOne({userName:getId.userName },{$set:{upFile:{
+        fileName:req.file.filename,
+        fileType:req.file.mimetype,
+        fileSize:req.file.size,
+        fileDestination:req.file.destination
+      }}});
+    console.log(a)
+    res.render("fasMass",{name:getId.userName,title:`Welcome ${getId.userName}`});
   } catch (err) {
     console.log("Multer error " + err);
   }
