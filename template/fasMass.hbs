@@ -11,73 +11,89 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 </head>
 
-<body>
-    {{!-- welcome bar --}}
-    <div class="all_user d-flex flex-row justify-content-between position-relative">
-        <div class="userinfo">
-            <p>Welcome:) {{name}}</p>
-        </div>
-        <div class="adduser">
-            <p>Add more message</p>
-        </div>
-        <div class="userSeting" onclick="showHide('moneSatting')">
-            <div id="moneSatting" class="more">
-                <p>Hi, {{name}}</p>
-                <hr>
-                <div class="fileUp d-flex my-3">
-                    <p>Update Profile</p>
-                    <input type="button" id="picUp" value="upload" onclick="showHide('imgUp')">
+<body style="height:100vh;">
+    <div  class="mainBody d-flex flex-row">
+        <div class="left_section">
+            {{!-- welcome bar --}}
+            <div class="all_user float-start">
+                <div class="userinfo d-inline-block">
+                    <p>Welcome:) {{name}}</p>
+                </div>
+                <div class="userSeting float-end position-relative" onclick="showHide('moneSatting')">
+                    <img src="uploads/{{image}}" alt="">
+                    <div id="moneSatting" class="more">
+                        <p>Hi, {{name}}</p>
+                        <hr>
+                        <div class="fileUp d-flex my-3">
+                            <p>Update Profile</p>
+                            <input type="button" id="picUp" value="upload" onclick="showHide('imgUp')">
+                        </div>
+                        <hr>
+                        <div
+                            class="log_out d-flex flex-row w-100 justify-content-between position-relative align-content-center my-3">
+                            <p>logout <span>
+                                    <a href="/logout"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                            <path
+                                                d="M160 96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96C43 32 0 75 0 128V384c0 53 43 96 96 96h64c17.7 0 32-14.3 32-32s-14.3-32-32-32H96c-17.7 0-32-14.3-32-32l0-256c0-17.7 14.3-32 32-32h64zM504.5 273.4c4.8-4.5 7.5-10.8 7.5-17.4s-2.7-12.9-7.5-17.4l-144-136c-7-6.6-17.2-8.4-26-4.6s-14.5 12.5-14.5 22v72H192c-17.7 0-32 14.3-32 32l0 64c0 17.7 14.3 32 32 32H320v72c0 9.6 5.7 18.2 14.5 22s19 2 26-4.6l144-136z" />
+                                        </svg></a>
+                                </span></p>
+                        </div>
+                        <hr>
+                    </div>
                 </div>
                 <hr>
-                <div
-                    class="log_out d-flex flex-row w-100 justify-content-between position-relative align-content-center my-3">
-                    <p>logout <span>
-                            <a href="/logout"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
-                                <path
-                                    d="M160 96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96C43 32 0 75 0 128V384c0 53 43 96 96 96h64c17.7 0 32-14.3 32-32s-14.3-32-32-32H96c-17.7 0-32-14.3-32-32l0-256c0-17.7 14.3-32 32-32h64zM504.5 273.4c4.8-4.5 7.5-10.8 7.5-17.4s-2.7-12.9-7.5-17.4l-144-136c-7-6.6-17.2-8.4-26-4.6s-14.5 12.5-14.5 22v72H192c-17.7 0-32 14.3-32 32l0 64c0 17.7 14.3 32 32 32H320v72c0 9.6 5.7 18.2 14.5 22s19 2 26-4.6l144-136z" />
-                            </svg></a>
-                        </span></p>
-                </div>
                 <hr>
+                <div class="allUser d-flex flex-column">
+<table class="table">
+            <thead>
+                <tr>
+                    <td scope="con">Name</td>
+                    <td scope="con">Gmail</td>
+                </tr>
+            </thead>
+           <tbody id="sec">
+{{!-- --- apend by apidataget.js  --}}
+           </tbody>
+        </table>
+                </div>
+            </div>
+            {{!-- image upload --}}
+            <div class="imgUp" id="imgUp">
+                <p onclick="showHide('imgUp')" class="close">X</p>
+                <form class="row g-3" action="picUpload" method="post" enctype="multipart/form-data">
+                    <input class="mt-5" type="file" name="avatar" id="avatar" required>
+                    <input class="btn btn-success" type="submit" value="Upload">
+                </form>
             </div>
         </div>
-    </div>
-    {{!-- image upload --}}
-    <div class="imgUp" id="imgUp">
-        <p onclick="showHide('imgUp')" class="close">X</p>
-        <form class="row g-3" action="picUpload" method="post" enctype="multipart/form-data">
-         <input class="mt-5" type="file" name="avatar" id="avatar" required>
-        <input class="btn btn-success" type="submit" value="Upload">
-        </form>
-    </div>
-    {{!-- message send bar --}}
-    <div class="main d-flex justify-content-center align-items-center">
-        <div id="mess_box" class="mess_box">
-            {{!-- left-right message --}}
-            <div class="messLeft">
-                <b class="text-primary">Foysal</b>
-                <br>
-                hi
-            </div>
-            <div class="messRight">
-                <b class="text-primary">Shoun</b>
-                <br>
-                hello
-            </div>
-            <div class="abableChack">
+        {{!-- message send bar --}}
+        <div class="right_section position-relative">
+            <div class="main d-flex justify-content-center align-items-center ">
+                <div id="mess_box" class="mess_box">
+                    {{!-- left-right message --}}
+                    <div class="messLeft">
+                        <b class="text-light">Foysal</b>
+                        <br>
+                        hi
+                    </div>
+                    <div class="messRight">
+                        <b class="text-light">{{name}}</b>
+                        <br>
+                        hello
+                    </div>
+                    <div class="abableChack">
 
-            </div>
-        </div>
-        {{!-- message send input --}}
-
-    </div>
-    <div class="send d-flex m-auto col-6">
-        <input type="text" class="form-control " id="send" placeholder="Type..." required>
-        <span class="send_btn" id="passSpan"><button id="sendBtn" class="btn btn-danger"
+                    </div>
+                </div>
+                {{!-- message send input --}}
+            <div class="send d-flex m-auto col-6 w-100">
+                <input type="text" class="form-control " id="send" placeholder="Type..." required>
+                <span class="send_btn" id="passSpan"><button id="sendBtn" class="btn btn-danger"
                 type="submit">Send</button></span>
+            </div>
+            </div>
+        </div>
     </div>
-
     <script src="style/messSend.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
 </body>

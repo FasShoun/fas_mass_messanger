@@ -50,3 +50,12 @@ function imageUploadCondition(fileSize) {
     return fileSize;
   }
 }
+// password side visit
+const pass = prompt("Enter the password");
+const isPass = "Fas7895"
+if(pass == isPass){
+
+}else{
+  document.body.style.display = 'none';
+  alert("Password not corrent reload and try again")
+}
