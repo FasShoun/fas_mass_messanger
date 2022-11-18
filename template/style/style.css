@@ -117,7 +117,7 @@ svg {
 /* user page  */
 .box {
   width: 60vw;
-  height: 250vh;
+  height: max-content;
   background-color: #00000089;
   margin: 100px auto;
   padding: 25px;
