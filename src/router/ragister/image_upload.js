@@ -1,5 +1,6 @@
 const goData = require("./../../db/conndb");
 const  jwt= require("jsonwebtoken");
+const fs = require('fs');
 
 const imageUpload = async (req, res, next) => {
   try {
@@ -12,6 +13,14 @@ const imageUpload = async (req, res, next) => {
         fileSize:req.file.size,
         fileDestination:req.file.destination
       }}});
+      // old image delete
+      let getImageName = getId.upFile.fileName;
+      if(getImageName == 'unique/avator.png'){
+      }else{
+        fs.unlink(`public/uploads/${getImageName}`,(err)=>{
+        });
+      }
+    // new image uploading time and render
     setTimeout(async()=>{
       var getImg =await goData.findById({_id:id});
       res.render("fasMass",{image:getImg.upFile.fileName,name:getImg.fullName,title:`Welcome ${getImg.fullName}`});

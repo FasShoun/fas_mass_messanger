@@ -42,7 +42,8 @@ let getApi = async() => {
     let getFetch = await fetch(url);
     let jshonToArr = await getFetch.json();
     jshonToArr.forEach((value, index, array) => {
-    appendFile(value.userName,value.gmail,index);
+      let imageFile =  value.upFile.fileName ;
+    appendFile(value.userName,value.gmail,imageFile,index);
     })
   } catch (err) {
     alert("possibly the prooblem is Fatch URL error or mongodb server off");
@@ -50,11 +51,12 @@ let getApi = async() => {
 }
 getApi()
 // website document append
-function appendFile(userName,gmail,index) {
+function appendFile(userName,gmail,file,index) {
     for (let i = 0; i <= index; i++) {
       let sec = document.getElementById("sec");
       let cU = document.createElement("tr");
       cU.innerHTML = `
+          <img src="uploads/${file}">
           <td>${userName}</td>
           <td>${gmail}</td>`
       sec.appendChild(cU);
