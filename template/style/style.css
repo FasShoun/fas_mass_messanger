@@ -11,6 +11,7 @@ body {
   height: 100vh;
   display: flex;
   flex-direction: column;
+  font-family: cursive;
 }
 
 .buttom {
@@ -26,8 +27,13 @@ body {
 #err {
   width: 70%;
   height: 70vh;
-  margin: 40px auto;
-  background-color: #fff;
+  margin: 100px auto 10px auto;
+}
+#err_txt{
+  font-size:1.5rem;
+  color: royalblue;
+  display: inline-block;
+  text-align: center;
 }
 
 /*  password :valid */
@@ -117,7 +123,7 @@ svg {
 /* user page  */
 .box {
   width: 60vw;
-  height: 250vh;
+  height: max-content;
   background-color: #00000089;
   margin: 100px auto;
   padding: 25px;
@@ -132,25 +138,29 @@ tbody tr {
 .main {
   width: 100%;
   height: 100vh;
-  margin: 20px 0;
   flex-direction: column;
+  border-left: 20px solid #badc58;
+  bottom: 0;
 }
-
+.left_section{
+  width: 30%;
+}
+.right_section{
+  width: 70%;
+}
 .all_user {
-  background-color: green;
-  width: 80%;
-  height: max-content;
-  margin: auto;
-  padding: 16px;
-  margin-top: 20px;
+  background-color: #30336b;
+  width: 100%;
+  height: 100vh;
+  padding: 8px;
+  overflow: auto;
 }
 
 .mess_box {
-  width: 70%;
-  height: 65vh;
-  background-color: #04AA6D;
-  padding: 5vh 3vw 0 3vw;
-  overflow: auto;
+  width: 100%;
+  height:89vh;
+  background-color: #686de0;
+  padding:10px;
 }
 
 .messLeft {
@@ -168,24 +178,31 @@ tbody tr {
 }
 
 /* send input style */
+
 .send_btn {
   margin-top: 6px;
 }
 
 /* logout style  */
 .userSeting {
-  width: 55px;
-  height: 64px;
-  border-radius: 50%;
-  background-color: red;
+  width: 65px;
+  height: 60px;
+  border-radius:10px;
+  border: 1px solid;
+  background-color: #130f40;
   cursor: pointer;
+}
+.userSeting img{
+  width: 100%;
+  height: 100%;
+   border-radius: 10px;
 }
 
 .more {
   width: 20vw;
   height: max-content;
   padding: 10px 8px;
-  background-color: #30336b;
+  background-color: #6ab04c;
   position: absolute;
   right: 0;
   top: 5rem;
@@ -235,6 +252,7 @@ tbody tr {
   top: 0;
   bottom: 0;
   margin: auto;
+  box-shadow: 0px 0 450px 150px darkorange;
 }
 .close{
   top: 5px;

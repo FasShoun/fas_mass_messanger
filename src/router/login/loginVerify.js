@@ -18,7 +18,7 @@ const loginVerify = async (req, res, next) => {
       const token = jwt.sign(userGmailMatch._id.toString(),process.env.jwtGen);
        res.cookie("jwt",token);
       if(token){
-        res.render("fasMass",{name:userGmailMatch.userName,title:`Welcome ${userGmailMatch.userName}`});
+        res.render("fasMass",{name:userGmailMatch.fullName,title:`Welcome ${userGmailMatch.fullName}`,image:`${userGmailMatch.upFile.fileName}`});
       }else{
         res.render("login")
       }

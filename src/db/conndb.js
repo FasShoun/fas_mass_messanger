@@ -36,6 +36,24 @@ const newSchema = new mongoose.Schema({
   date: {
     type: Date,
     default: Date.now,
+  },
+  upFile:{
+    fileName:{
+      type:String,
+      value:"not upload"
+    },
+    fileType:{
+      type:String,
+      value:"not upload"
+    },
+    fileSize:{
+      type:String,
+      value:"not upload"
+    },
+    fileDestination:{
+      type:String,
+      value:"not upload"
+    },
   }
 });
 newSchema.plugin(uniqueValidator);
