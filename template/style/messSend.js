@@ -19,6 +19,7 @@ function upMessage(){
 var moneSatting = document.getElementById('moneSatting');
 var imgUp = document.getElementById('imgUp');
 var imgUpFinal = document.getElementById('imgUpFinal');
+var mainBody = document.getElementsByClassName('mainBody');
 
 function showHide(which){
      if(which == "moneSatting"){
@@ -32,6 +33,31 @@ function showHide(which){
             imgUp.style.display = "none";
     }else{
         imgUp.style.display = "block";
-       
      }
-}}
+}};
+// user database data fatch
+const url = "http://localhost/api:7895";
+let getApi = async() => {
+  try {
+    let getFetch = await fetch(url);
+    let jshonToArr = await getFetch.json();
+    jshonToArr.forEach((value, index, array) => {
+    appendFile(value.userName,value.gmail,index);
+    })
+  } catch (err) {
+    alert("possibly the prooblem is Fatch URL error or mongodb server off");
+  }
+}
+getApi()
+// website document append
+function appendFile(userName,gmail,index) {
+    for (let i = 0; i <= index; i++) {
+      let sec = document.getElementById("sec");
+      let cU = document.createElement("tr");
+      cU.innerHTML = `
+          <td>${userName}</td>
+          <td>${gmail}</td>`
+      sec.appendChild(cU);
+      return
+    }
+  }
