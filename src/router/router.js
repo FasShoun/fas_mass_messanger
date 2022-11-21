@@ -9,13 +9,13 @@ const loginVerify = require("./login/loginVerify");
 const dataApi = require("./dataAPi");
 const logout = require("./login/logout");
 const delete_one = require("./delete_one");
-// const profilePicUpload = require("./profilePicUpload");
+const goData = require("./../db/conndb");
 // --get items
 const title =  "Welcome to secure messanger"
  router.get('/',author,(req,res)=>{
     // author for already login user ro not
 })
-router.get('/login',author,(req,res)=>{
+router.get(`/login/`,author,(req,res)=>{
     // author for already login user ro not
 })
 router.get('/create',(req,res)=>{
@@ -23,8 +23,7 @@ router.get('/create',(req,res)=>{
 })
 router.get('/logout',author,logout,(req,res)=>{
 });
-router.get('/deleteOne',author,delete_one,(req,res)=>{
-    res.render('login',{title:title})
+router.post('/deleteOne',author,delete_one,(req,res)=>{
 });
 
 //------- hidden page

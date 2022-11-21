@@ -17,7 +17,7 @@
             {{!-- welcome bar --}}
             <div class="all_user float-start">
                 <div class="userinfo d-inline-block">
-                    <p>Welcome:) {{name}}</p>
+                    <p>Welcome :) {{name}}</p>
                 </div>
                 <div class="userSeting float-end position-relative" onclick="showHide('moneSatting')">
                     <img src="uploads/{{image}}" alt="">
@@ -31,9 +31,7 @@
                         <hr>
                         <div class="delete d-flex flex-row justify-content-between">
                             <p>Delete Account <span style="border-bottom:1px solid red ;">Permanent</span></p>
-                            <form action="/deleteOne" method="get">
-                                <button class="btn btn-danger"  type="submit">Delete</button>
-                            </form>
+                            <input class="btn btn-outline-danger w-50" type="button" value="Delete" onclick="showHide('deleteId')" placeholder="Enter your User Name plz!">
                         </div>
                         <hr>
                         <div
@@ -48,6 +46,7 @@
                     </div>
                 </div>
                 <hr>
+                <span>{{more}}</span>
                 <hr>
                 <div class="allUser d-flex flex-column">
                     <table class="table">
@@ -69,9 +68,20 @@
                 <p onclick="showHide('imgUp')" class="close">X</p>
                 <form class="row g-3" action="picUpload" method="post" enctype="multipart/form-data">
                     <input class="mt-5" type="file" name="avatar" id="avatar" required>
+                    <p class=" text-danger p-0 m-0">Image Size must be less the 1Mb</p>
+                    <p class=" text-danger p-0 m-0">Just jpg, jpge, png file suppored</p>
                     <input class="btn btn-success" type="submit" value="Upload">
                 </form>
             </div>
+        </div>
+        {{!-- delete account --}}
+        <div class="imgUp" id="deleteId">
+            <p onclick="showHide('deleteId')" class="close">X</p>
+            <form action="/deleteOne" method="post">
+                <input type="text" name="deleteName" id="deleteName">
+                <p>Enter your user name then delete & Logout</p>
+                <input type="submit" value="Delete">
+            </form>
         </div>
         {{!-- message send bar --}}
         <div class="right_section">

@@ -18,6 +18,7 @@ function upMessage(){
 // logout & upload image show hidden
 var moneSatting = document.getElementById('moneSatting');
 var imgUp = document.getElementById('imgUp');
+var deleteId = document.getElementById('deleteId');
 var imgUpFinal = document.getElementById('imgUpFinal');
 var mainBody = document.getElementsByClassName('mainBody');
 
@@ -28,13 +29,21 @@ function showHide(which){
     }else{
         moneSatting.style.display = "block";
     }
-     }else if(which == "imgUp"){
+     }
+     else if(which == "imgUp"){
         if(imgUp.style.display == "block"){
             imgUp.style.display = "none";
     }else{
         imgUp.style.display = "block";
      }
-}};
+  }else if(which == "deleteId"){
+    if(deleteId.style.display == "block"){
+      deleteId.style.display = "none";
+    }else{
+      deleteId.style.display = "block";
+    }
+  }
+};
 // user database data fatch
 const url = "http://localhost/api:7895";
 let getApi = async() => {
