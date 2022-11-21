@@ -1,4 +1,4 @@
-const  jwt= require("jsonwebtoken");
+const  jwt = require("jsonwebtoken");
 const goData = require("./../../db/conndb");
 
 const author = async (req,res,next)=>{

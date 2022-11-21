@@ -17,10 +17,14 @@ const newSchema = new mongoose.Schema({
   userName: {
     type: String,
     unique: true,
+    min:1,
+    trim:true
   },
 
   fullName: {
     type: String,
+    min:1,
+    trim:true
   },
   gmail: {
     type: String,
@@ -29,6 +33,7 @@ const newSchema = new mongoose.Schema({
   pass: {
     type: String,
     required:true,
+    min:6,
   },
   repass:{
     type:String
@@ -40,19 +45,19 @@ const newSchema = new mongoose.Schema({
   upFile:{
     fileName:{
       type:String,
-      value:"not upload"
+      default:"unique/avator.png"
     },
     fileType:{
       type:String,
-      value:"not upload"
+      default:"fileType"
     },
     fileSize:{
       type:String,
-      value:"not upload"
+      default:"fileSize"
     },
     fileDestination:{
       type:String,
-      value:"not upload"
+      default:"fileDestination"
     },
   }
 });
