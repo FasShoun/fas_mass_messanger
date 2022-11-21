@@ -12,12 +12,12 @@
 </head>
 
 <body style="height:100vh;">
-    <div  class="mainBody d-flex flex-row">
+    <div class="mainBody d-flex flex-row">
         <div class="left_section">
             {{!-- welcome bar --}}
             <div class="all_user float-start">
                 <div class="userinfo d-inline-block">
-                    <p>Welcome:) {{name}}</p>
+                    <p>Welcome :) {{name}}</p>
                 </div>
                 <div class="userSeting float-end position-relative" onclick="showHide('moneSatting')">
                     <img src="uploads/{{image}}" alt="">
@@ -29,6 +29,11 @@
                             <input type="button" id="picUp" value="upload" onclick="showHide('imgUp')">
                         </div>
                         <hr>
+                        <div class="delete d-flex flex-row justify-content-between">
+                            <p>Delete Account <span style="border-bottom:1px solid red ;">Permanent</span></p>
+                            <input class="btn btn-outline-danger w-50" type="button" value="Delete" onclick="showHide('deleteId')" placeholder="Enter your User Name plz!">
+                        </div>
+                        <hr>
                         <div
                             class="log_out d-flex flex-row w-100 justify-content-between position-relative align-content-center my-3">
                             <p>logout <span>
@@ -38,23 +43,24 @@
                                         </svg></a>
                                 </span></p>
                         </div>
-                        <hr>
                     </div>
                 </div>
                 <hr>
+                <span>{{more}}</span>
                 <hr>
                 <div class="allUser d-flex flex-column">
-<table class="table">
-            <thead>
-                <tr>
-                    <td scope="con">Name</td>
-                    <td scope="con">Gmail</td>
-                </tr>
-            </thead>
-           <tbody id="sec">
-{{!-- --- apend by apidataget.js  --}}
-           </tbody>
-        </table>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <td scope="con">Profile</td>
+                                <td scope="con">Name</td>
+                                <td scope="con">Gmail</td>
+                            </tr>
+                        </thead>
+                        <tbody id="sec">
+                            {{!-- --- apend by apidataget.js --}}
+                        </tbody>
+                    </table>
                 </div>
             </div>
             {{!-- image upload --}}
@@ -62,13 +68,24 @@
                 <p onclick="showHide('imgUp')" class="close">X</p>
                 <form class="row g-3" action="picUpload" method="post" enctype="multipart/form-data">
                     <input class="mt-5" type="file" name="avatar" id="avatar" required>
+                    <p class=" text-danger p-0 m-0">Image Size must be less the 1Mb</p>
+                    <p class=" text-danger p-0 m-0">Just jpg, jpge, png file suppored</p>
                     <input class="btn btn-success" type="submit" value="Upload">
                 </form>
             </div>
         </div>
+        {{!-- delete account --}}
+        <div class="imgUp" id="deleteId">
+            <p onclick="showHide('deleteId')" class="close">X</p>
+            <form action="/deleteOne" method="post">
+                <input type="text" name="deleteName" id="deleteName">
+                <p>Enter your user name then delete & Logout</p>
+                <input type="submit" value="Delete">
+            </form>
+        </div>
         {{!-- message send bar --}}
-        <div class="right_section position-relative">
-            <div class="main d-flex justify-content-center align-items-center ">
+        <div class="right_section">
+            <div class="main d-flex">
                 <div id="mess_box" class="mess_box">
                     {{!-- left-right message --}}
                     <div class="messLeft">
@@ -82,15 +99,15 @@
                         hello
                     </div>
                     <div class="abableChack">
-
+                        {{!-- message send input --}}
+                        <div class="send d-flex">
+                            <input type="text" class="form-control p-0 m-0" id="send" placeholder="Type..." required>
+                            <span class="send_btn p-0 m-0" id="passSpan"><button id="sendBtn" class="btn btn-danger"
+                                    type="submit">Send</button></span>
+                        </div>
                     </div>
                 </div>
-                {{!-- message send input --}}
-            <div class="send d-flex m-auto col-6 w-100">
-                <input type="text" class="form-control " id="send" placeholder="Type..." required>
-                <span class="send_btn" id="passSpan"><button id="sendBtn" class="btn btn-danger"
-                type="submit">Send</button></span>
-            </div>
+
             </div>
         </div>
     </div>

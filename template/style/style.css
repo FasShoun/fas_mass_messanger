@@ -13,7 +13,6 @@ body {
   flex-direction: column;
   font-family: cursive;
 }
-
 .buttom {
   margin-top: auto;
   width: 100%;
@@ -140,7 +139,7 @@ tbody tr {
   height: 100vh;
   flex-direction: column;
   border-left: 20px solid #badc58;
-  bottom: 0;
+  position: relative;
 }
 .left_section{
   width: 30%;
@@ -155,22 +154,30 @@ tbody tr {
   padding: 8px;
   overflow: auto;
 }
-
+/* api image style  */
+.all_user tbody img{
+  width: 5vw;
+  border-radius: 16px;
+}
 .mess_box {
   width: 100%;
-  height:89vh;
+  height:100vh;
   background-color: #686de0;
-  padding:10px;
+  overflow: scroll;
 }
 
 .messLeft {
   text-align: left;
   margin-right: 10%;
+  margin-left: 20px;
+  margin-top: 10px;
 }
 
 .messRight {
   text-align: right;
   margin-left: 10%;
+  margin-right: 20px;
+  margin-top: 10px;
 }
 
 .mess_box b {
@@ -178,7 +185,11 @@ tbody tr {
 }
 
 /* send input style */
-
+.send{
+  position: absolute;
+  bottom: 0;
+  width: 98.5%;
+}
 .send_btn {
   margin-top: 6px;
 }
