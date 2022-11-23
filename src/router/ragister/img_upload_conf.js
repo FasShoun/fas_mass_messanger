@@ -25,6 +25,8 @@ const upload = multer({
     ) {
       cd(null, true);
     } else {
+      cd(new Error("file must be png, jpeg, jpg"))
+      // cd(null, false);
     }
   },
 });

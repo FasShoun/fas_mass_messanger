@@ -1,7 +1,7 @@
 "use strict";
 
 // user database data fatch
-const url = "http://localhost/api:7895";
+const url = "http://localhost/api:7895"
 let getApi = async () => {
   try {
     let getFetch = await fetch(url);
