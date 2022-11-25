@@ -154,10 +154,35 @@ tbody tr {
   padding: 8px;
   overflow: auto;
 }
+.all_user tbody tr{
+  cursor: pointer;
+}
+.all_user tbody tr:hover{
+  background-color: #0000004c;
+}
+.userDetails{
+    padding: 20px 0;
+}
+.userDetails p{
+  text-align: center;
+  margin: 0;
+  padding: 8px 0 0 0;
+}
+#userPic{
+  width: 100px;
+  height: 90px;
+  margin: auto;
+}
+#sec tr td{
+  padding:8px 0 0 0;
+}
 /* api image style  */
 .all_user tbody img{
-  width: 5vw;
-  border-radius: 16px;
+  width: 5.5vw;
+  border-radius:50%;
+  height: 70px;
+  padding: 5px;
+  margin: 0;
 }
 .mess_box {
   width: 100%;
@@ -198,7 +223,7 @@ tbody tr {
 .userSeting {
   width: 65px;
   height: 60px;
-  border-radius:10px;
+  /* border-radius:10px; */
   border: 1px solid;
   background-color: #130f40;
   cursor: pointer;
@@ -213,7 +238,8 @@ tbody tr {
   width: 20vw;
   height: max-content;
   padding: 10px 8px;
-  background-color: #6ab04c;
+  background-color: #487eb0;
+  border: 2px solid #fff;
   position: absolute;
   right: 0;
   top: 5rem;
@@ -234,19 +260,27 @@ tbody tr {
   position: absolute;
   right: 0;
   margin-top: -4px;
+  border: 2px solid lightgreen;
+  padding: 1px;
+  background-color: #e84118;
 }
 
 /* image upload style  */
 #picUp {
   background-color: orange;
-  color: orchid;
+  color: #fff;
   padding: 4px;
-  border: 1.6px solid darkcyan;
+  border: 1.6px solid #fff;
   display: block;
   width: 40%;
   margin: 0;
   position: absolute;
   right: 5px;
+}
+#picUp:hover{
+  background-color: #fff;
+  color: orange;
+  border:2px solid orange;
 }
 .imgUp{
   display: none;

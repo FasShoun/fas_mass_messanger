@@ -1,6 +1,7 @@
 "use strict";
-const send = document.getElementById('send');
-const mess_box = document.getElementById('mess_box');
+var send = document.getElementById('send');
+var mess_box = document.getElementById('mess_box');
+var userPic = document.getElementById('userPic');
 
 // message send
 document.querySelector('#sendBtn').addEventListener('click',upMessage);
@@ -52,7 +53,7 @@ let getApi = async() => {
     let jshonToArr = await getFetch.json();
     jshonToArr.forEach((value, index, array) => {
       let imageFile =  value.upFile.fileName ;
-    appendFile(value.userName,value.gmail,imageFile,index);
+    appendFile(value.fullName,value.gmail,imageFile,index);
     })
   } catch (err) {
     alert("possibly the prooblem is Fatch URL error or mongodb server off");
@@ -64,6 +65,7 @@ function appendFile(userName,gmail,file,index) {
     for (let i = 0; i <= index; i++) {
       let sec = document.getElementById("sec");
       let cU = document.createElement("tr");
+      cU.setAttribute('onclick',`findSpacifyUser('${userName}','${gmail}','${file}')`)
       cU.innerHTML = `
           <img src="uploads/${file}">
           <td>${userName}</td>
@@ -72,3 +74,11 @@ function appendFile(userName,gmail,file,index) {
       return
     }
   }
+// user data show in message seection
+function findSpacifyUser(userName,gmail,file){
+  userPic.src = `uploads/${file}`;
+  document.getElementById('userName').innerHTML = userName;
+  document.getElementById('text-left').innerHTML = userName;
+  document.getElementById('userGmail').innerHTML = gmail;
+  // userGmail.innerHTML = gmail;
+}
