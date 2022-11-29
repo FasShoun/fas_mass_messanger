@@ -18,12 +18,14 @@
             {{!-- welcome bar --}}
             <div class="all_user float-start">
                 <div class="userinfo d-inline-block">
-                    <p>Welcome :) {{name}}</p>
-                    <p class="mt-3"><a class=" text-success bg-gradient" href="/">Reload</a></p>
+                    <p>Welcome : ) {{name}}</p>
+                    <p class="mt-3"><a class=" text-success px-3 py-2 bg-gradient" href="/">Reload</a>
+                        <b class=" px-3 py-2 mx-2 bg-gradient text-primary " id="searchUser">Search</b>
+                    </p>
                 </div>
                 <div class="userSeting float-end position-relative rounded-circle" onclick="showHide('moneSatting')">
                     <img class=" rounded-circle" src="uploads/{{image}}" alt="">
-                    <div id="moneSatting" class="more">
+                    <div id="moneSatting" class="animate more">
                         <p>Hi, {{name}}</p>
                         <hr>
                         <div class="fileUp d-flex my-3">
@@ -51,7 +53,31 @@
                 <hr>
                 <span class="text-danger bg-black">{{more}}</span>
                 <hr>
+                {{!-- search user --}}
+                <div class="searchUser d-flex">
+                    <input type="text" class="animate" name="userSearch" id="user1" placeholder="Search Friend"
+                        onkeyup='getSearchFullName()'>
+                </div>
+                <div id="userFind" class="find_box">
+                    <p id="not_found"> User not found</p>
+                    <div class="allUser d-flex flex-column">
+                        {{!-- user table --}}
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <td scope="con">Profile</td>
+                                    <td scope="con">Name</td>
+                                    <td scope="con">Gmail</td>
+                                </tr>
+                            </thead>
+                            <tbody id="sec_f">
+                                {{!-- --- apend by apidataget.js --}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
                 <div class="allUser d-flex flex-column">
+                    {{!-- user table --}}
                     <table class="table">
                         <thead>
                             <tr>
@@ -89,6 +115,12 @@
         {{!-- message send bar --}}
         <div class="right_section">
             <div class="main d-flex">
+                {{!-- right top section --}}
+                <div
+                    class="right_section_top w-100 bg-primary h-auto position-fixed d-flex flex-row align-items-center">
+                    <img class=" rounded-circle" id="userPic_top" src="uploads/unique/avator.png" alt="Picture">
+                    <p id="userName_top">Invalid User</p>
+                </div>
                 <div id="mess_box" class="mess_box">
                     <div class="userDetails w-100 d-flex justify-content-center flex-column">
                         <img class=" rounded-circle" id="userPic" src="uploads/unique/avator.png" alt="Picture">
@@ -98,28 +130,38 @@
                     <hr>
                     {{!-- left-right message --}}
                     <div class="messLeft">
-                        <b id="text-left" class="text-light">Foysal</b>
+                        <img class=" rounded-circle" id="userPic_n" src="uploads/unique/avator.png" alt="Picture">
                         <br>
-                        hi
+                        <p id="messRight_p">Hello how are your</p>
                     </div>
                     <div class="messRight">
-                        <b class="text-light">{{name}}</b>
                         <br>
-                        hello
+                        <p id="messRight_p">Hello</p>
                     </div>
                     <div class="abableChack">
                         {{!-- message send input --}}
-                        <div class="send d-flex">
-                            <input type="text" class="form-control p-0 m-0" id="send" placeholder="Type..." required>
-                            <span class="send_btn p-0 m-0" id="passSpan"><button id="sendBtn" class="btn btn-danger"
-                                    type="submit">Send</button></span>
-                        </div>
+                        <form action="" id="form">
+                            <div class="send d-flex">
+                                <input type="text" class="form-control p-0 m-0" id="send" autocomplete="off"
+                                    placeholder="Type..." required>
+                                <span class="send_btn p-0 m-0" id="passSpan">
+                                    <button id="sendBtn" class="btn btn-danger" type="submit">Send</button>
+                                </span>
+
+                            </div>
+                        </form>
                     </div>
                 </div>
 
             </div>
         </div>
     </div>
+    {{!-- socket io --}}
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+
+    </script>
+
     <script src="style/messSend.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
 </body>
