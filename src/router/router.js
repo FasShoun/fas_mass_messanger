@@ -40,7 +40,7 @@ router.post('/login',loginVerify,(req,res)=>{
 })
 router.post('/picUpload',upload.single('avatar'),imageUpload,(req,res)=>{
 })
-
+router.post('/',loginVerify)
 
 // error handling
 router.use((err,req,res,next)=>{

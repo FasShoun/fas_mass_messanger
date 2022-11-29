@@ -8,6 +8,15 @@ const path = require("path");
 const cors = require("cors");
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser')
+// socket io
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
+
+io.on('connection', (socket) => {
+    socket.on('chat message', msg => {
+      io.emit('chat message', msg);
+    });
+  });
 
 const port = process.env.openPort || process.env.port
 
@@ -30,6 +39,7 @@ app.get(("*"),((req,res)=>{
     res.render("error")
 }))
 
-app.listen(process.env.openPort, ()=>{
-    console.log(`port open in ${port}`)
-})
+// socket io & port listen
+http.listen(port, () => {
+    console.log(`server running at http://localhost:${port}/`);
+  });
