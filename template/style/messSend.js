@@ -5,6 +5,7 @@ var userPic = document.getElementById("userPic");
 var user_top = document.getElementById("userPic_top");
 var userPic_n = document.getElementById("userPic_n");
 var not_found = document.getElementById('not_found');
+var mgs_send = new Audio('sound/mgs_send.mp3');
 // message send
 // document.querySelector('#sendBtn').addEventListener('click',upMessage);
 // function upMessage(){
@@ -34,6 +35,7 @@ socket.on("chat message", function (msg) {
   createDiv.classList.add("messRight");
   createDiv.innerHTML = `<p id="messRight_p">${msg}</p>`;
   mess_box.appendChild(createDiv);
+  mgs_send.play();
   window.scrollTo(0, document.body.scrollHeight);
 });
 
@@ -43,7 +45,7 @@ var imgUp = document.getElementById("imgUp");
 var deleteId = document.getElementById("deleteId");
 var imgUpFinal = document.getElementById("imgUpFinal");
 var mainBody = document.getElementsByClassName("mainBody");
-
+// more option hide & show
 function showHide(which) {
   if (which == "moneSatting") {
     if (moneSatting.style.display == "block") {
@@ -65,9 +67,11 @@ function showHide(which) {
     }
   }
 }
+// user search hide & and show
 document.getElementById("searchUser").addEventListener("click", function () {
   setTimeout(() => {
     var serarchUser = document.getElementById("user1");
+    not_found.style.display = "block"
     if (serarchUser.style.display == "block") {
       serarchUser.value = "";
       serarchUser.style.display = "none";
@@ -87,7 +91,6 @@ let getApi = async (search) => {
       if (search == undefined) {
         var imageFile = value.upFile.fileName;
         appendFile(value.fullName, value.gmail, imageFile, index);
-        console.log("message");
       } else if (search == value.fullName) {
         appendFile(
           value.fullName,
@@ -108,14 +111,22 @@ getApi();
 function getSearchFullName() {
   let searchUserName = document.getElementById("user1");
   document.getElementById("userFind").style.display = "block";
-  getApi(searchUserName.value);
+  getApi(searchUserName.value)
+  not_found.style.display = 'block';;
 }
 
 // website document append
 function appendFile(userName, gmail, file, index, display) {
   // search data append
+  var temparary = document.querySelectorAll('.temparary');
   for (let i = 0; i <= index; i++) {
-    if (display == "block") {
+    temparary.forEach((value) => {
+      if(value.innerHTML == userName){
+        display = 'none'
+        not_found.style.display = "none";
+      }
+    })
+     if (display == "block") {
       let sec_f = document.getElementById("sec_f");
       let cU_f = document.createElement("tr");
       cU_f.setAttribute(
@@ -124,13 +135,13 @@ function appendFile(userName, gmail, file, index, display) {
       );
       cU_f.innerHTML = `
           <img src="uploads/${file}">
-          <td>${userName}</td>
+          <td class="temparary">${userName}</td>
           <td>${gmail}</td>`;
       sec_f.appendChild(cU_f);
       not_found.style.display = "none";
       return;
-    }
-  // user append
+    }else if(display == undefined){
+      // user append
   let sec = document.getElementById("sec");
   let cU = document.createElement("tr");
   cU.setAttribute(
@@ -142,6 +153,7 @@ function appendFile(userName, gmail, file, index, display) {
           <td>${userName}</td>
           <td>${gmail}</td>`;
   sec.appendChild(cU);
+    }
   return;
   }
 }
@@ -155,5 +167,4 @@ function findSpacifyUser(userName, gmail, file) {
   document.getElementById("userGmail").innerHTML = gmail;
 
   document.getElementById("userName_top").innerHTML = userName;
-  document.getElementById("text-left_top").innerHTML = userName;
 }
