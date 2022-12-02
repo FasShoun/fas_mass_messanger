@@ -9,6 +9,7 @@ async function main() {
     console.log("Mongodb connect success");
   } catch (err) {
     console.log("Mongodb not connect");
+    console.log(err)
   }
 }
 // -- create schema
