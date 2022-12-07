@@ -52,7 +52,7 @@ function imageUploadCondition(fileSize) {
 }
 // password side visit
 const pass = prompt("Enter the password");
-const isPass = "Fas7895"
+const isPass = "7895"
 if(pass == isPass){
 
 }else{

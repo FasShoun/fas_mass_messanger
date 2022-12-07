@@ -6,6 +6,7 @@ var user_top = document.getElementById("userPic_top");
 var userPic_n = document.getElementById("userPic_n");
 var not_found = document.getElementById('not_found');
 var mgs_send = new Audio('sound/mgs_send.mp3');
+var sec_f = document.getElementById("sec_f");
 // message send
 // document.querySelector('#sendBtn').addEventListener('click',upMessage);
 // function upMessage(){
@@ -15,6 +16,7 @@ var mgs_send = new Audio('sound/mgs_send.mp3');
 //     createDiv.classList.add('messRight');
 //     createDiv.innerText = inputValue;
 //     mess_box.appendChild(createDiv);
+//     mgs_send.play();
 //     send.value = "";
 //     }
 // }
@@ -91,7 +93,15 @@ let getApi = async (search) => {
       if (search == undefined) {
         var imageFile = value.upFile.fileName;
         appendFile(value.fullName, value.gmail, imageFile, index);
-      } else if (search == value.fullName) {
+      } else if (search ==  value.fullName[0]) {
+        appendFile(
+          value.fullName,
+          value.gmail,
+          value.upFile.fileName,
+          index,
+          "block"
+        );
+      }else if(search ==  value.fullName){
         appendFile(
           value.fullName,
           value.gmail,
@@ -118,6 +128,9 @@ function getSearchFullName() {
 // website document append
 function appendFile(userName, gmail, file, index, display) {
   // search data append
+  if(sec_f.childElementCount >= 1){
+    sec_f.children[0].remove();
+  }
   var temparary = document.querySelectorAll('.temparary');
   for (let i = 0; i <= index; i++) {
     temparary.forEach((value) => {
@@ -127,10 +140,9 @@ function appendFile(userName, gmail, file, index, display) {
       }
     })
      if (display == "block") {
-      let sec_f = document.getElementById("sec_f");
       let cU_f = document.createElement("tr");
       cU_f.setAttribute(
-        "onclick",
+        "onmouseover",
         `findSpacifyUser('${userName}','${gmail}','${file}')`
       );
       cU_f.innerHTML = `
