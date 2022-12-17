@@ -8,7 +8,7 @@ const author = async (req,res,next)=>{
        const id = await jwt.verify(genToken,process.env.jwtGen)
  if(genToken){
     let verifyCom = await goData.findOne({_id:id});
-    res.render("fasMass",{name:verifyCom.fullName,title:`Welcome ${verifyCom.fullName}`,image:`${verifyCom.upFile.fileName}`});
+    res.render("fasMass",{name:verifyCom.fullName,hi_name:verifyCom.userName,title:`Welcome ${verifyCom.fullName}`,image:`${verifyCom.upFile.fileName}`});
 }
     next();
    }catch(err){

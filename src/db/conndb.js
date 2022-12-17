@@ -2,8 +2,7 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 var uniqueValidator = require('mongoose-unique-validator');
-main();
-async function main() {
+(async function main() {
   try {
     await mongoose.connect(process.env.mongodbConnect);
     console.log("Mongodb connect success");
@@ -11,7 +10,7 @@ async function main() {
     console.log("Mongodb not connect");
     console.log(err)
   }
-}
+}())
 // -- create schema
 const newSchema = new mongoose.Schema({
   

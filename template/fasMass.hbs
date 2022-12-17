@@ -23,10 +23,11 @@
                         <b class=" px-3 py-2 mx-2 bg-gradient text-primary " id="searchUser">Search</b>
                     </p>
                 </div>
-                <div class="userSeting float-end position-relative rounded-circle" onclick="showHide('moneSatting')">
+                <div class="userSeting float-end position-relative rounded-circle">
                     <img class=" rounded-circle" src="uploads/{{image}}" alt="">
+                    <h5 onclick="showHide('moneSatting')" id="sMore">. . .</h5>
                     <div id="moneSatting" class="animate more">
-                        <p>Hi, {{name}}</p>
+                        <p id="correntUser">{{hi_name}}</p>
                         <hr>
                         <div class="fileUp d-flex my-3">
                             <p>Update Profile</p>
@@ -140,14 +141,15 @@
                     </div>
                     <div class="abableChack">
                         {{!-- message send input --}}
-                        <form action="/hi" id="form" method="post">
+                        <form  action="/message" method="POST">
                             <div class="send d-flex">
                                 <input type="text" class="form-control p-0 m-0" id="send" autocomplete="off"
                                     placeholder="Type..." name="send" required>
                                 <span class="send_btn p-0 m-0" id="passSpan">
-                                    <button id="sendBtn" class="btn btn-danger" type="submit">Send</button>
+                                    <button onclick="sendMgs()" id="sendBtn" class="btn btn-danger" type="submit">Send</button>
                                 </span>
                             </div>
+                        </form>
                     </div>
                 </div>
 
@@ -156,10 +158,6 @@
     </div>
     {{!-- socket io --}}
     <script src="/socket.io/socket.io.js"></script>
-    <script>
-
-    </script>
-
     <script src="style/messSend.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
 </body>

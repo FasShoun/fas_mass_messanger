@@ -9,15 +9,17 @@ const loginVerify = require("./login/loginVerify");
 const dataApi = require("./dataAPi");
 const logout = require("./login/logout");
 const delete_one = require("./delete_one");
+const mgs_send = require('./socket')
 // --get items
 const title =  "Welcome to secure messanger";
+
 router.get('/',author,((req,res)=>{}));
-router.get(`/login`,author,((req,res)=>{}));
+router.get('/login',author,((req,res)=>{}));
 router.get('/create',(req,res)=>{
     res.render("create",{title:title});
 })
-router.get('/logout',author,logout,((req,res)=>{
-    res.render("login");
+router.get('/logout',logout,((req,res)=>{
+    res.redirect('login');
 }));
 
 //------- hidden page
@@ -31,11 +33,16 @@ router.post("/create",createAccountRequire,((req,res)=>{}));
 router.post('/login',loginVerify,((req,res) =>{}));
 router.post('/picUpload',upload.single('avatar'),imageUpload,((req,res)=>{}))
 router.post('/deleteOne',author,delete_one,((req,res)=>{}));
-router.post('/hi',loginVerify,(req,res)=>{
-    console.log(req.body.send)
+router.post('/message',mgs_send,(req,res)=>{
+    console.log(req.body)
+    res.render('fasMass')
 })
 
 // error handling
+router.get(("*"),((req,res)=>{
+    res.render("error")
+}))
+
 router.use((err,req,res,next)=>{
     if(err.message === "file must be png, jpeg, jpg"){
         res.render('fasMass',{more:"file must be png, jpeg, jpg "});
@@ -44,10 +51,9 @@ router.use((err,req,res,next)=>{
     }else{
         if (err) {
             console.log(err);
-            res.sendStatus(500);
-            return;
         } 
     }
+    next()
 })
 
 module.exports = router;
