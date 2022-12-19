@@ -11,25 +11,28 @@ var cookieParser = require("cookie-parser");
 // const { Namespace } = require('socket.io');
 // ---------------
 // socket io
+
+
 const http = require("http").Server(app);
 const io = require("socket.io")(http);
 // const iosend = require('./router/socket')
-// io.on("connection", (socket) => {
-//   socket.on("user_message", (val) => {
-//     socket.send(val);
-//   });
-//   // get login _id
-//   socket.on("conversationId_id", (val) => {
-//     // console.log(val);
-//   });
-//   // get send user _id
-//   socket.on("user_id", (val) => {
-//     // console.log(val);
-//   });
-// });
+io.on("connection", (socket) => {
+  socket.on("user_message", (val) => {
+    socket.send(val);
+  });
+  // get login _id
+   login_id = socket.on("conversationId_id", (val) => {
+    // console.log(val);
+  });
+  // get send user _id
+   user_id = socket.on("user_id", (val) => {
+    // console.log(val);
+  });
+});
+
 // -------------
 const port = process.env.openPort || process.env.port;
-
+app.use(bodyParser.json());
 app.use(express.urlencoded());
 app.use(express.static("public"));
 app.use(

@@ -9,59 +9,77 @@ var mgs_send = new Audio("sound/mgs_send.mp3");
 var sec_f = document.getElementById("sec_f");
 var correntUser = document.getElementById("correntUser");
 // message send
-var message_id;
-var correntLogin_id;
-console.log(message_id, correntLogin_id)
-document.querySelector("#sendBtn").addEventListener("click", upMessage);
-function upMessage() {
-  const inputValue = send.value;
-  if (inputValue) {
-  let createDiv = document.createElement("div");
-  createDiv.classList.add("messRight");
-  createDiv.innerHTML = `<p id="messRight_p">${inputValue}</p>`;
-  mess_box.appendChild(createDiv);
-  mgs_send.play();
-  document.getElementsByClassName("mess_box")[0].scrollBy(0, 200);
-  document.getElementsByClassName("mess_box")[0].style =
-    "scroll-behavior: smooth";
-  send.value = "";
-  }
-}
-// press enter key send mgs
-window.addEventListener('keyup',(key)=>{
-  if(key.key == 'Enter'){
-    upMessage()
-  }
-})
-// ---------------------
 // var message_id;
 // var correntLogin_id;
-// var socket = io();
-//   // receive message form server
-//   socket.on('message',(val)=>{
-//     if(val){
-//       let createDiv = document.createElement("div");
-//     createDiv.classList.add("messRight");
-//     createDiv.innerHTML = `<p id="messRight_p">${val}</p>`;
-//     mess_box.appendChild(createDiv);
-//     mgs_send.play();
-//     document.getElementsByClassName("mess_box")[0].scrollBy(0, 200);
-//     document.getElementsByClassName("mess_box")[0].style =
-//       "scroll-behavior: smooth";
-//     send.value = "";
-//     }
-//   })
-// // send message to chient to server use onclick
-// function sendMgs(){
-//   socket.emit('user_message',send.value);
-//   // send _id's
-//   if(message_id == undefined){
-//     alert('Select user plz!')
-//   }else{
-//   socket.emit('user_id',message_id);
-//   socket.emit('conversationId_id',correntLogin_id);
+// document.querySelector("#sendBtn").addEventListener("click", upMessage);
+// function sendMgs() {
+//   const inputValue = send.value;
+//   if (inputValue) {
+//   let createDiv = document.createElement("div");
+//   createDiv.classList.add("messRight");
+//   createDiv.innerHTML = `<p id="messRight_p">${inputValue}</p>`;
+//   mess_box.appendChild(createDiv);
+//   mgs_send.play();
+//   document.getElementsByClassName("mess_box")[0].scrollBy(0, 200);
+//   document.getElementsByClassName("mess_box")[0].style =
+//     "scroll-behavior: smooth";
+//   send.value = "";
 //   }
 // }
+// press enter key send mgs
+window.addEventListener("keyup", (key) => {
+  if (key.key == "Enter") {
+    sendMgs();
+  }
+});
+// ---------------------
+// current login & send message id's
+var correntLogin_id;
+var message_id;
+var socket = io();
+// receive message form server
+socket.on("message", (val) => {
+  if (val.trim() != "") {
+    let createDiv = document.createElement("div");
+    createDiv.classList.add("messRight");
+    createDiv.innerHTML = `<p id="messRight_p">${val}</p>`;
+    mess_box.appendChild(createDiv);
+    mgs_send.play();
+    document.getElementsByClassName("mess_box")[0].scrollBy(0, 200);
+    document.getElementsByClassName("mess_box")[0].style =
+      "scroll-behavior: smooth";
+    send.value = "";
+  } else {
+    alert("Not supported");
+  }
+});
+// send message to chient to server use onclick
+function sendMgs() {
+  socket.emit("user_message", send.value);
+  // send _id's
+  if (message_id == undefined) {
+    alert("Select your friend plz!");
+    return 0;
+  } else {
+    socket.emit("user_id", message_id);
+    socket.emit("conversationId_id", correntLogin_id);
+  }
+  // send message data in backen use fech post request
+  fetch("http://localhost/mgs", {
+    method: "post",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      conversationId: correntLogin_id,
+      message_id: message_id,
+      text: send.value,
+    }),
+  }).then((val) => {
+    console.log(val);
+  });
+}
 
 // -------------------
 // logout & upload image show hidden
@@ -92,8 +110,8 @@ function showHide(which) {
     }
   }
   let user1 = document.getElementById("user1");
-    user1.style.display = 'none';
-    user1.value = "";
+  user1.style.display = "none";
+  user1.value = "";
 }
 // user search hide & and show
 document.getElementById("searchUser").addEventListener("click", function () {
@@ -116,8 +134,11 @@ let getApi = async (search) => {
     let getFetch = await fetch(url);
     let jshonToArr = await getFetch.json();
     jshonToArr.forEach((value, index, array) => {
-      if(correntUser.innerText == value.userName){
-        correntLogin_id = value._id;  
+      if (correntUser.innerText == value.userName) {
+        correntLogin_id = value._id;
+      }
+      if (correntLogin_id == value._id) {
+        return;
       }
       if (search == undefined) {
         // view to screen
@@ -172,7 +193,6 @@ function getSearchFullName() {
 
 // website document append
 function appendFile(userName, gmail, file, index, display, rName) {
-  
   // search data append
   if (sec_f.childElementCount >= 2) {
     sec_f.children[0].remove();
@@ -218,22 +238,66 @@ function appendFile(userName, gmail, file, index, display, rName) {
   }
 }
 
+let mgsUrl = "http://localhost/api/user/mgs:789";
+let getMgs = async (correntLogin_id, message_id) => {
+  try {
+    let fetchMgs = await fetch(mgsUrl);
+    let fetchMgsToString = await fetchMgs.json();
+    fetchMgsToString.forEach((val) => {
+      if (
+        val.conversationId == correntLogin_id &&
+        val.message_id == message_id
+      ) {
+        if (val.conversationId == correntLogin_id) {
+          let createDiv = document.createElement("div");
+          setTimeout(()=>{
+            if(true){
+              createDiv.classList.add("messRight");
+              createDiv.innerHTML = `<p id="messRight_p">${val.text}</p>`;
+              mess_box.appendChild(createDiv);
+              document.getElementsByClassName("mess_box")[0].scrollBy(0, 200);
+              document.getElementsByClassName("mess_box")[0].style =
+              "scroll-behavior: smooth";
+            }
+          },400)
+            return
+        }}
+    });
+  } catch (err) {
+    alert("possibly the prooblem is Fetch URL error or mongodb server off");
+    console.log(err);
+  }
+};
 // user data show in message seection
-function findSpacifyUser(userName, gmail, file, realName, index, display = undefined) {
+function findSpacifyUser(
+  userName,
+  gmail,
+  file,
+  realName,
+  index,
+  display = undefined
+) {
+  let mgsBlock = document.querySelectorAll('.messRight');
+  setTimeout(()=>{
+    for(let i = 0; i < mgsBlock.length; i++){
+        mgsBlock[i].remove();
+    }
+  },500)
   message_id = realName;
+  getMgs(correntLogin_id, message_id);
   userPic.src = `uploads/${file}`;
   userPic_top.src = `uploads/${file}`;
   userPic_n.src = `uploads/${file}`;
   document.getElementById("userName").innerHTML = userName;
   document.getElementById("userGmail").innerHTML = gmail;
   document.getElementById("userName_top").innerHTML = userName;
-  if(display != 'block'){
+  if (display != "block") {
     document.getElementsByClassName("new_tr")[index].style =
-    "background-color: gray";
+      "background-color: gray";
     oldIndexNumber(index);
     document.getElementById("userFind").style.display = "none";
     let user1 = document.getElementById("user1");
-    user1.style.display = 'none';
+    user1.style.display = "none";
     user1.value = "";
   }
 }

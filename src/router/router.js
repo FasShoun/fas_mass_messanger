@@ -7,6 +7,7 @@ const imageUpload = require("./ragister/image_upload");
 const createAccountRequire = require('./ragister/create_require');
 const loginVerify = require("./login/loginVerify");
 const dataApi = require("./dataAPi");
+const mgsApi = require('./mgsApi')
 const logout = require("./login/logout");
 const delete_one = require("./delete_one");
 const mgs_send = require('./socket')
@@ -27,20 +28,20 @@ router.get('/user:789',(req,res)=>{
     res.render("user",{title:title});
 });
 router.get('/api:789', dataApi,((req,res)=>{}));
+router.get('/api/user/mgs:789', mgsApi,((req,res)=>{}));
 
 // --post mathod
 router.post("/create",createAccountRequire,((req,res)=>{}));
 router.post('/login',loginVerify,((req,res) =>{}));
 router.post('/picUpload',upload.single('avatar'),imageUpload,((req,res)=>{}))
 router.post('/deleteOne',author,delete_one,((req,res)=>{}));
-router.post('/message',mgs_send,(req,res)=>{
-    console.log(req.body)
-    res.render('fasMass')
+router.post('/mgs',mgs_send,(req,res)=>{
+    console.log('message')
 })
 
 // error handling
 router.get(("*"),((req,res)=>{
-    res.render("error")
+    res.render("error");
 }))
 
 router.use((err,req,res,next)=>{
@@ -53,7 +54,5 @@ router.use((err,req,res,next)=>{
             console.log(err);
         } 
     }
-    next()
 })
-
 module.exports = router;

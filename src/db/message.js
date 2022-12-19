@@ -11,17 +11,19 @@ const mongoose = require("mongoose");
   }())
 
 const messagesSchema = new mongoose.Schema({
-    conversationId:{
+  conversationId:{
     type: String
     },
-    sender:{
+    message_id:{
         type:String
     },
     text:{
         type:String
     },
-},
-{timestamps:true})
-
+    time:{
+      type:String,
+      default: Date()
+    }
+})
 const messdb = mongoose.model('fas_messanger_chat',messagesSchema);
 module.exports = messdb;
