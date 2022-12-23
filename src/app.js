@@ -8,6 +8,7 @@ const path = require("path");
 const cors = require("cors");
 var bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
+const { connect } = require("http2");
 // const { Namespace } = require('socket.io');
 // ---------------
 // socket io
@@ -17,16 +18,13 @@ const http = require("http").Server(app);
 const io = require("socket.io")(http);
 // const iosend = require('./router/socket')
 io.on("connection", (socket) => {
+    console.log('new use is '+ socket.id);
+    socket.on('disconnect',()=>{
+      console.log('User disConnect')
+    })
+   
   socket.on("user_message", (val) => {
     socket.send(val);
-  });
-  // get login _id
-   login_id = socket.on("conversationId_id", (val) => {
-    // console.log(val);
-  });
-  // get send user _id
-   user_id = socket.on("user_id", (val) => {
-    // console.log(val);
   });
 });
 

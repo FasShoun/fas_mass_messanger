@@ -8,6 +8,8 @@ var not_found = document.getElementById("not_found");
 var mgs_send = new Audio("sound/mgs_send.mp3");
 var sec_f = document.getElementById("sec_f");
 var correntUser = document.getElementById("correntUser");
+var loading_body = document.getElementById("loading_body");
+var right_section = document.getElementsByClassName("right_section")[0];
 // message send
 // var message_id;
 // var correntLogin_id;
@@ -39,16 +41,18 @@ var message_id;
 var socket = io();
 // receive message form server
 socket.on("message", (val) => {
-  if (val.trim() != "") {
-    let createDiv = document.createElement("div");
-    createDiv.classList.add("messRight");
-    createDiv.innerHTML = `<p id="messRight_p">${val}</p>`;
-    mess_box.appendChild(createDiv);
-    mgs_send.play();
-    document.getElementsByClassName("mess_box")[0].scrollBy(0, 200);
-    document.getElementsByClassName("mess_box")[0].style =
-      "scroll-behavior: smooth";
-    send.value = "";
+  if (val.trim() != ""){
+      setTimeout(()=>{
+        let createDiv = document.createElement("div");
+      createDiv.classList.add("messRight");
+      createDiv.innerHTML = `<p id="messRight_p">${val}</p>`;
+      mess_box.appendChild(createDiv);
+      mgs_send.play();
+      document.getElementsByClassName("mess_box")[0].scrollBy(0, 200);
+      document.getElementsByClassName("mess_box")[0].style =
+        "scroll-behavior: smooth";
+      send.value = "";
+      },20)
   } else {
     alert("Not supported");
   }
@@ -60,10 +64,7 @@ function sendMgs() {
   if (message_id == undefined) {
     alert("Select your friend plz!");
     return 0;
-  } else {
-    socket.emit("user_id", message_id);
-    socket.emit("conversationId_id", correntLogin_id);
-  }
+  } 
   // send message data in backen use fech post request
   fetch("http://localhost/mgs", {
     method: "post",
@@ -114,7 +115,8 @@ function showHide(which) {
   user1.value = "";
 }
 // user search hide & and show
-document.getElementById("searchUser").addEventListener("click", function () {
+document.getElementById("searchUser").addEventListener("click",searchHide)
+function searchHide() {
   setTimeout(() => {
     var serarchUser = document.getElementById("user1");
     not_found.style.display = "block";
@@ -126,7 +128,7 @@ document.getElementById("searchUser").addEventListener("click", function () {
       serarchUser.style.display = "block";
     }
   }, 100);
-});
+};
 // user database data fatch
 const url = "http://localhost/api:7895";
 let getApi = async (search) => {
@@ -208,7 +210,8 @@ function appendFile(userName, gmail, file, index, display, rName) {
     if (display == "block") {
       let cU_f = document.createElement("tr");
       cU_f.setAttribute(
-        "onmouseover",
+        // for search user
+        "onclick",
         `findSpacifyUser('${userName}','${gmail}','${file}','${rName}','${index}','block')`
       );
       cU_f.setAttribute("class", "new_tr");
@@ -224,20 +227,21 @@ function appendFile(userName, gmail, file, index, display, rName) {
       let sec = document.getElementById("sec");
       let cU = document.createElement("tr");
       cU.setAttribute(
-        "onclick",
-        `findSpacifyUser('${userName}','${gmail}','${file}','${rName}','${index}')`
+        // for display append user
+        `onclick`,
+        `findSpacifyUser('${userName}','${gmail}','${file}','${rName}','${index}'),setTimeout(()=>{style = 'background-color:gray'},100)`
       );
       cU.setAttribute("class", "new_tr");
       cU.innerHTML = `
-          <img src="uploads/${file}">
+      <img src="uploads/${file}">
           <td>${userName}</td>
-          <td>${gmail}</td>`;
+          <td>${gmail}
+          </td>`;
       sec.appendChild(cU);
     }
     return;
   }
 }
-
 let mgsUrl = "http://localhost/api/user/mgs:789";
 let getMgs = async (correntLogin_id, message_id) => {
   try {
@@ -250,18 +254,35 @@ let getMgs = async (correntLogin_id, message_id) => {
       ) {
         if (val.conversationId == correntLogin_id) {
           let createDiv = document.createElement("div");
+          loading_body.style.display = 'block';
+          right_section.style.display = "none";
           setTimeout(()=>{
             if(true){
               createDiv.classList.add("messRight");
               createDiv.innerHTML = `<p id="messRight_p">${val.text}</p>`;
               mess_box.appendChild(createDiv);
-              document.getElementsByClassName("mess_box")[0].scrollBy(0, 200);
+              document.getElementsByClassName("mess_box")[0].scrollBy(0, 800);
               document.getElementsByClassName("mess_box")[0].style =
               "scroll-behavior: smooth";
+              setTimeout(()=>{
+              loading_body.style.display = 'none';
+              right_section.style.display = "block";
+              mess_box.scrollTop = mess_box.scrollHeight;
+            },50)
             }
-          },400)
-            return
-        }}
+          },500)}
+      }if(val.conversationId  ==  message_id &&  val.message_id ==correntLogin_id){
+        setTimeout(() => {
+          let createDiv = document.createElement("div");
+        createDiv.classList.add("messLeft");
+        createDiv.innerHTML = `<p id="messRight_p">${val.text}</p>`;
+        mess_box.appendChild(createDiv);
+        document.getElementsByClassName("mess_box")[0].scrollBy(0, 400);
+        document.getElementsByClassName("mess_box")[0].style =
+        "scroll-behavior: smooth";
+        },500);
+      }
+      
     });
   } catch (err) {
     alert("possibly the prooblem is Fetch URL error or mongodb server off");
@@ -275,12 +296,19 @@ function findSpacifyUser(
   file,
   realName,
   index,
-  display = undefined
+  display = 'noblock'
 ) {
-  let mgsBlock = document.querySelectorAll('.messRight');
+  // MESSAGE remove onclick
+let mgsBlockRight = document.querySelectorAll('.messRight');
+let mgsBlockLeft = document.querySelectorAll('.messLeft');
   setTimeout(()=>{
-    for(let i = 0; i < mgsBlock.length; i++){
-        mgsBlock[i].remove();
+    for(let i = 0; i < mgsBlockRight.length; i++){
+      mgsBlockRight[i].remove();
+    }
+  },500)
+  setTimeout(()=>{
+    for(let i = 0; i < mgsBlockLeft.length; i++){
+      mgsBlockLeft[i].remove();
     }
   },500)
   message_id = realName;
@@ -291,23 +319,18 @@ function findSpacifyUser(
   document.getElementById("userName").innerHTML = userName;
   document.getElementById("userGmail").innerHTML = gmail;
   document.getElementById("userName_top").innerHTML = userName;
-  if (display != "block") {
-    document.getElementsByClassName("new_tr")[index].style =
-      "background-color: gray";
-    oldIndexNumber(index);
+  if (display === "noblock") {
+    let bgColorTempChange = document.querySelectorAll(".new_tr");
+    bgColorTempChange.forEach((val)=>{
+      val.style = "background-color: none";
+    })
     document.getElementById("userFind").style.display = "none";
     let user1 = document.getElementById("user1");
-    user1.style.display = "none";
     user1.value = "";
+    user1.style.display = "none";
   }
-}
-var oldIndexStor;
-function oldIndexNumber(oldIndex) {
-  if (oldIndexStor == undefined) {
-    oldIndexStor = oldIndex;
-    return;
-  }
-  document.getElementsByClassName("new_tr")[oldIndexStor].style =
-    "background-color: none";
-  oldIndexStor = oldIndex;
+  var serarchUser = document.getElementById("user1");
+  serarchUser.value = "";
+  serarchUser.style.display = "none";
+  document.getElementsByClassName("find_box")[0].style.display = "none";
 }
