@@ -6,29 +6,13 @@ var user_top = document.getElementById("userPic_top");
 var userPic_n = document.getElementById("userPic_n");
 var not_found = document.getElementById("not_found");
 var mgs_send = new Audio("sound/mgs_send.mp3");
+var mgs_come = new Audio("sound/mgs_come.mp3");
 var sec_f = document.getElementById("sec_f");
 var correntUser = document.getElementById("correntUser");
 var loading_body = document.getElementById("loading_body");
 var right_section = document.getElementsByClassName("right_section")[0];
-// message send
-// var message_id;
-// var correntLogin_id;
-// document.querySelector("#sendBtn").addEventListener("click", upMessage);
-// function sendMgs() {
-//   const inputValue = send.value;
-//   if (inputValue) {
-//   let createDiv = document.createElement("div");
-//   createDiv.classList.add("messRight");
-//   createDiv.innerHTML = `<p id="messRight_p">${inputValue}</p>`;
-//   mess_box.appendChild(createDiv);
-//   mgs_send.play();
-//   document.getElementsByClassName("mess_box")[0].scrollBy(0, 200);
-//   document.getElementsByClassName("mess_box")[0].style =
-//     "scroll-behavior: smooth";
-//   send.value = "";
-//   }
-// }
-// press enter key send mgs
+
+
 window.addEventListener("keyup", (key) => {
   if (key.key == "Enter") {
     sendMgs();
@@ -39,32 +23,36 @@ window.addEventListener("keyup", (key) => {
 var correntLogin_id;
 var message_id;
 var socket = io();
+
+setTimeout(()=>{
+  socket.emit('login',correntLogin_id)
+},1500)
+
+
 // receive message form server
-socket.on("message", (val) => {
-  if (val.trim() != ""){
-      setTimeout(()=>{
-        let createDiv = document.createElement("div");
-      createDiv.classList.add("messRight");
-      createDiv.innerHTML = `<p id="messRight_p">${val}</p>`;
-      mess_box.appendChild(createDiv);
-      mgs_send.play();
-      document.getElementsByClassName("mess_box")[0].scrollBy(0, 200);
-      document.getElementsByClassName("mess_box")[0].style =
+socket.on('userSelect_send',(val)=>{
+  console.log(val);
+})
+socket.on('socket_mgs',(val)=>{
+  if(val.mgs.trim() != ""){
+    let createDiv = document.createElement("div");
+        createDiv.classList.add("messLeft");
+        createDiv.innerHTML = `<p id="messRight_p">${val.mgs}</p>`;
+        mess_box.appendChild(createDiv);
+        document.getElementsByClassName("mess_box")[0].scrollBy(0, 400);
+        document.getElementsByClassName("mess_box")[0].style =
         "scroll-behavior: smooth";
-      send.value = "";
-      },20)
-  } else {
-    alert("Not supported");
   }
-});
+
+})
+
+
 // send message to chient to server use onclick
 function sendMgs() {
-  socket.emit("user_message", send.value);
+  socket.emit("user_message", {mgs:send.value,mainUser:correntLogin_id ,selectUser:message_id});
+  // socket.emit("user_message", send.value);
   // send _id's
-  if (message_id == undefined) {
-    alert("Select your friend plz!");
-    return 0;
-  } 
+
   // send message data in backen use fech post request
   fetch("http://localhost/mgs", {
     method: "post",
@@ -80,6 +68,19 @@ function sendMgs() {
   }).then((val) => {
     console.log(val);
   });
+
+  const inputValue = send.value;
+  if (inputValue.trim() != "") {
+  let createDiv = document.createElement("div");
+  createDiv.classList.add("messRight");
+  createDiv.innerHTML = `<p id="messRight_p">${inputValue}</p>`;
+  mess_box.appendChild(createDiv);
+  mgs_send.play();
+  document.getElementsByClassName("mess_box")[0].scrollBy(0, 200);
+  document.getElementsByClassName("mess_box")[0].style =
+    "scroll-behavior: smooth";
+  send.value = "";
+  }
 }
 
 // -------------------
@@ -130,7 +131,7 @@ function searchHide() {
   }, 100);
 };
 // user database data fatch
-const url = "http://localhost/api:7895";
+const url = `http://localhost/api:7895`;
 let getApi = async (search) => {
   try {
     let getFetch = await fetch(url);
@@ -298,6 +299,8 @@ function findSpacifyUser(
   index,
   display = 'noblock'
 ) {
+// ------ socket io
+socket.emit("userSelect",{mainUser:correntLogin_id ,selectUser:realName})
   // MESSAGE remove onclick
 let mgsBlockRight = document.querySelectorAll('.messRight');
 let mgsBlockLeft = document.querySelectorAll('.messLeft');
