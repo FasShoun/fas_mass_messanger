@@ -15,8 +15,6 @@ let delete_one = async (req, res, next) => {
       } else {
         fs.unlink(`public/uploads/${getImageName}`, (err) => {});
       }
-        // coockie clear
-        res.clearCookie("jwt");
       // delete user
       await goData.findByIdAndDelete({ _id: id });
       next();
