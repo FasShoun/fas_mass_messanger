@@ -22,18 +22,22 @@ window.addEventListener("keyup", (key) => {
 // current login & send message id's
 var correntLogin_id;
 var message_id;
+var messageCome;
 var socket = io();
 
 setTimeout(()=>{
-  socket.emit('login',correntLogin_id)
+  socket.emit('login',{messageId:message_id,currentLogin:correntLogin_id})
 },1500)
 
 
 // receive message form server
 socket.on('userSelect_send',(val)=>{
   console.log(val);
-})
+}) 
 socket.on('socket_mgs',(val)=>{
+  console.log(val)
+  messageCome = val.selectUser
+  socket.emit('mgs_come',val.selectUser)
   if(val.mgs.trim() != ""){
     let createDiv = document.createElement("div");
         createDiv.classList.add("messLeft");
@@ -50,8 +54,6 @@ socket.on('socket_mgs',(val)=>{
 // send message to chient to server use onclick
 function sendMgs() {
   socket.emit("user_message", {mgs:send.value,mainUser:correntLogin_id ,selectUser:message_id});
-  // socket.emit("user_message", send.value);
-  // send _id's
 
   // send message data in backen use fech post request
   fetch("http://localhost/mgs", {
@@ -179,11 +181,24 @@ let getApi = async (search) => {
           value._id
         );
       }
+      // active user style
+      socket.on('activeUser',val=>{
+       document.getElementById(val).classList.add('active')
+      })
+      // mgs come form user style
+      socket.on('mgs_come_val',val=>{
+        console.log(val)
+        if(value._id == val){
+          document.getElementById(val).style.backgroundColor = 'lightgreen'
+          console.log(value.userName, value._id)
+        }
+      })
     });
   } catch (err) {
     alert("possibly the prooblem is Fetch URL error or mongodb server off");
     console.log(err);
   }
+  
 };
 getApi();
 // search user name
@@ -216,6 +231,7 @@ function appendFile(userName, gmail, file, index, display, rName) {
         `findSpacifyUser('${userName}','${gmail}','${file}','${rName}','${index}','block')`
       );
       cU_f.setAttribute("class", "new_tr");
+      cU_f.setAttribute("id", rName);
       cU_f.innerHTML = `
           <img src="uploads/${file}">
           <td class="temparary">${userName}</td>
@@ -233,6 +249,7 @@ function appendFile(userName, gmail, file, index, display, rName) {
         `findSpacifyUser('${userName}','${gmail}','${file}','${rName}','${index}'),setTimeout(()=>{style = 'background-color:gray'},100)`
       );
       cU.setAttribute("class", "new_tr");
+      cU.setAttribute("id", rName);
       cU.innerHTML = `
       <img src="uploads/${file}">
           <td>${userName}</td>

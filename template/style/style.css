@@ -469,3 +469,6 @@ tbody tr {
 #loading_body{
   display: none;
 }
+.active{
+  border: 1.6px solid yellow;
+}
