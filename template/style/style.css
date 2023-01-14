@@ -142,9 +142,11 @@ tbody tr {
   position: relative;
 }
 .left_section{
+  display: block;
   width: 30%;
 }
 .right_section{
+  display: block;
   width: 70%;
 }
 .right_section_top{
@@ -469,6 +471,9 @@ tbody tr {
 #loading_body{
   display: none;
 }
-.active{
-  border: 1.6px solid yellow;
+.user_active{
+  border: 2px solid lightgreen;
+}
+.next_page{
+  display: none;
 }

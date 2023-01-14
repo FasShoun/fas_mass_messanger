@@ -11,6 +11,7 @@ var sec_f = document.getElementById("sec_f");
 var correntUser = document.getElementById("correntUser");
 var loading_body = document.getElementById("loading_body");
 var right_section = document.getElementsByClassName("right_section")[0];
+let left_section = document.getElementsByClassName('left_section')[0];
 
 
 window.addEventListener("keyup", (key) => {
@@ -32,29 +33,32 @@ setTimeout(()=>{
 
 // receive message form server
 socket.on('userSelect_send',(val)=>{
-  console.log(val);
+  // console.log(val);
 }) 
 socket.on('socket_mgs',(val)=>{
-  console.log(val)
-  messageCome = val.selectUser
   socket.emit('mgs_come',val.selectUser)
-  if(val.mgs.trim() != ""){
-    let createDiv = document.createElement("div");
-        createDiv.classList.add("messLeft");
-        createDiv.innerHTML = `<p id="messRight_p">${val.mgs}</p>`;
-        mess_box.appendChild(createDiv);
-        document.getElementsByClassName("mess_box")[0].scrollBy(0, 400);
-        document.getElementsByClassName("mess_box")[0].style =
-        "scroll-behavior: smooth";
-  }
+  setTimeout(()=>{
+    if(messageCome == message_id){
+      if(val.mgs.trim() != ""){
+        let createDiv = document.createElement("div");
+            createDiv.classList.add("messLeft");
+            createDiv.innerHTML = `<p id="messRight_p">${val.mgs}</p>`;
+            mess_box.appendChild(createDiv);
+            document.getElementsByClassName("mess_box")[0].scrollBy(0, 400);
+            document.getElementsByClassName("mess_box")[0].style =
+            "scroll-behavior: smooth";
+      }
+    }
+  },400)
 
 })
 
 
 // send message to chient to server use onclick
-function sendMgs() {
-  socket.emit("user_message", {mgs:send.value,mainUser:correntLogin_id ,selectUser:message_id});
+function sendMgs() { 
+    // user message select & message come in live
 
+    socket.emit("user_message", {mgs:send.value,mainUser:correntLogin_id ,selectUser:message_id});
   // send message data in backen use fech post request
   fetch("http://localhost/mgs", {
     method: "post",
@@ -183,14 +187,19 @@ let getApi = async (search) => {
       }
       // active user style
       socket.on('activeUser',val=>{
-       document.getElementById(val).classList.add('active')
+       document.getElementById(val).classList.add('user_active')
       })
+      // inActive user style
+      socket.on('inActiveUser',val=>{
+        //console.log(val)  // =====
+        document.getElementById(val).classList.remove('user_active')
+       })
       // mgs come form user style
       socket.on('mgs_come_val',val=>{
-        console.log(val)
         if(value._id == val){
+          messageCome = val;
+          //console.log(val) // =====
           document.getElementById(val).style.backgroundColor = 'lightgreen'
-          console.log(value.userName, value._id)
         }
       })
     });
@@ -353,4 +362,19 @@ let mgsBlockLeft = document.querySelectorAll('.messLeft');
   serarchUser.value = "";
   serarchUser.style.display = "none";
   document.getElementsByClassName("find_box")[0].style.display = "none";
+
+  // responsive section
+  
+  if (window.matchMedia('(max-width: 750px)').matches){
+    left_section.style.display  = 'none';
+  }else if (window.matchMedia('(min-width: 749px)').matches){
+    left_section.style.display = 'block';
+    right_section.style.display = 'blcok'
+ } 
 }
+function previousSection(){
+  if (window.matchMedia('(max-width: 750px)').matches){
+    left_section.style.display = 'block';
+    right_section.style.display = 'none'
+  } 
+  }
