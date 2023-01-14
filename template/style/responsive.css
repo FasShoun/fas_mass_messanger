@@ -1,0 +1,48 @@
+@media only screen and (max-width:869px){
+
+    .left_section{
+        width: 40%;
+    }
+    .more{
+        width: 25vw;
+    }
+
+}
+@media only screen and (max-width:750px){
+    .left_section{
+        width: 100%;
+    }
+    .right_section{
+        display:none;
+        width: 100%;
+    }
+    .all_user tbody img {
+        width: 9.5vw;
+        border-radius: 50%;
+        height: 62px;
+        padding: 5px;
+        margin: 0 0 0 10px;
+    }
+    .next_page{
+        display: block;
+        height: 55px;
+        background-color: lightseagreen;
+    }
+    .next_page span {
+        font-size: x-large;
+        color: black;
+        padding: 5px 12px;
+    }
+    #loading_body{
+        left: 40%;
+    }
+    .more {
+        width: 75vw;
+    }
+}
+
+@media only screen and (max-width:400px){
+    #loading_body{
+        left: 29%;
+    }
+}

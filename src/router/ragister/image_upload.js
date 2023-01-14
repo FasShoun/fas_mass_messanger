@@ -23,7 +23,7 @@ const imageUpload = async (req, res, next) => {
     // new image uploading time and render
     setTimeout(async()=>{
       var getImg =await goData.findById({_id:id});
-      res.render("fasMass",{image:getImg.upFile.fileName,name:getImg.fullName,title:`Welcome ${getImg.fullName}`});
+      res.render("fasMass",{image:getImg.upFile.fileName,name:getImg.fullName,hi_name:getImg.userName,title:`Welcome ${getImg.fullName}`});
     },500)
   } catch (err) {
     console.log("Multer error " + err);
