@@ -9,6 +9,7 @@
     <link rel="shortcut icon" href="styleFiles/icon.png" type="image/x-icon">
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/responsive.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 </head>
 
@@ -19,7 +20,7 @@
             <div class="all_user float-start">
                 <div class="userinfo d-inline-block">
                     <p>Welcome : ) {{name}}</p>
-                    <p class="mt-3"><a class=" text-success px-3 py-2 bg-gradient" href="/">Reload</a>
+                    <p class="mt-3"><a class=" text-success px-3 py-2 bg-gradient" href="/">Refresh</a>
                         <b onclick=" " class=" px-3 py-2 mx-2 bg-gradient text-primary " id="searchUser">Search</b>
                     </p>
                 </div>
@@ -89,6 +90,12 @@
                         </thead>
                         <tbody id="sec">
                             {{!-- --- apend by apidataget.js --}}
+
+                                {{!-- <tr class="new_tr">
+                                    <td><img src="uploads/unique/avator.png" alt="" srcset=""></td>
+                                    <td>Demo</td>
+                                    <td>demo@gmail.com</td>
+                                </tr> --}}
                         </tbody>
                     </table>
                 </div>
@@ -126,6 +133,9 @@
         <div class="right_section">
             <div class="main d-flex">
                 {{!-- right top section --}}
+                <div class="next_page">
+                    <span onclick="previousSection()">< previous</span>
+                </div>
                 <div
                     class="right_section_top w-100 bg-primary h-auto position-stiky d-flex flex-row align-items-center">
                     <img class=" rounded-circle" id="userPic_top" src="uploads/unique/avator.png" alt="Picture">
@@ -173,6 +183,7 @@
     {{!-- socket io --}}
     <script src="/socket.io/socket.io.js"></script>
     <script src="style/messSend.js"></script>
+    <script src="style/responsiveEvent.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
 
 </html>

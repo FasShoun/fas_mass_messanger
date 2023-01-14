@@ -9,11 +9,9 @@ const cors = require("cors");
 var bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
 const { connect } = require("http2");
-// const { Namespace } = require('socket.io');
-// ---------------
-// socket io
+const { populate } = require("./db/conndb");
 
-
+// socket io ----------
 const http = require("http").Server(app);
 // const io = require("socket.io")(http);
 const io = require("socket.io")(http, {
@@ -21,54 +19,67 @@ const io = require("socket.io")(http, {
     origin: "http://localhost:8080",
   },
 });
-// const iosend = require('./router/socket')
 var users = [];
 let user = {};
 io.on("connection", (socket) => {
   socket.on("user_message", (val) => {
-    users.forEach(value=>{
-      if( val.selectUser == value.selectUser){
-        console.log('active user')
-        io.to(value.socketId).emit('socket_mgs',{mgs:val.mgs});
-      }else{
-        // socket.emit('user_message',{mgs:val.mgs,selectUser:val.selectUser});
+    users.forEach((value) => {
+      if (val.selectUser == value.selectUser) {
+        io.to(value.socketId).emit("socket_mgs", {
+          mgs: val.mgs,
+          selectUser: val.mainUser,
+          mainUser: val.selectUser,
+        });
       }
-    })
-
-
+    });
   });
-  socket.on('login', function(data){
-      // saving userId to object with socket ID
-    user = {selectUser: data, socketId:socket.id}
-    users.push(user)
+  // new user join
+  socket.on("login", function (data) {
+    // saving userId to object with socket ID
+    user = {
+      selectUser: data.currentLogin,
+      socketId: socket.id,
+      currentLogin: data.messageId,
+    };
+    users.push(user);
+    users.forEach((val) => {
+      io.emit("activeUser", val.selectUser);
+    });
   });
-
-  socket.on('userSelect',(val)=>{
-    // users.forEach(value=>{
-    //   if( val.selectUser == value.selectUser){
-    //     console.log(val.selectUser + ' + ' +value.socketId);
-    //     io.to(value.socketId).emit('socket_mgs', 'for your eyes only');
-    //   }else{
-    //     console.log('user not found')
-    //   }
-    // })
-      // socket.emit("userSelect_send",val +socket.id)
-      socket.emit("userSelect_send",
-      { activeId:socket.id,
-        correntLogin_id:val.mainUser,
-        selectUser:val.selectUser})
-    })
-
-  socket.on('disconnect',()=>{
-    users.forEach(val=>{
-      if(val.socketId == socket.id){
-        delete val.selectUser;
-        delete val.socketId;
+  // socket.emit("userSelect_send",val +socket.id in console)
+  socket.on("userSelect", (val) => {
+    socket.emit("userSelect_send", {
+      activeId: socket.id,
+      correntLogin_id: val.mainUser,
+      selectUser: val.selectUser,
+    });
+  });
+  // user disconnect
+  socket.on("disconnect", () => {
+    users.forEach((val, i) => {
+      if (val.socketId == socket.id) {
+        setTimeout(() => {
+          io.emit("inActiveUser", val.selectUser);
+          delete val.selectUser;
+          delete val.socketId;
+          delete val.currentLogin;
+        },1000);
       }
-    })
-  })
+    });
 
+    // delete {} empty object
+    users.forEach((val, i) => {
+      if (Object.keys(val).length === 0) {
+        users.splice(i, 1);
+      }
+    });
+  });
+
+  socket.on("mgs_come", (val) => {
+    socket.emit("mgs_come_val", val);
+  });
 });
+
 // -------------
 const port = process.env.openPort || process.env.port;
 app.use(bodyParser.json());

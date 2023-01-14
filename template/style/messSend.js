@@ -11,6 +11,7 @@ var sec_f = document.getElementById("sec_f");
 var correntUser = document.getElementById("correntUser");
 var loading_body = document.getElementById("loading_body");
 var right_section = document.getElementsByClassName("right_section")[0];
+let left_section = document.getElementsByClassName('left_section')[0];
 
 
 window.addEventListener("keyup", (key) => {
@@ -22,37 +23,42 @@ window.addEventListener("keyup", (key) => {
 // current login & send message id's
 var correntLogin_id;
 var message_id;
+var messageCome;
 var socket = io();
 
 setTimeout(()=>{
-  socket.emit('login',correntLogin_id)
+  socket.emit('login',{messageId:message_id,currentLogin:correntLogin_id})
 },1500)
 
 
 // receive message form server
 socket.on('userSelect_send',(val)=>{
-  console.log(val);
-})
+  // console.log(val);
+}) 
 socket.on('socket_mgs',(val)=>{
-  if(val.mgs.trim() != ""){
-    let createDiv = document.createElement("div");
-        createDiv.classList.add("messLeft");
-        createDiv.innerHTML = `<p id="messRight_p">${val.mgs}</p>`;
-        mess_box.appendChild(createDiv);
-        document.getElementsByClassName("mess_box")[0].scrollBy(0, 400);
-        document.getElementsByClassName("mess_box")[0].style =
-        "scroll-behavior: smooth";
-  }
+  socket.emit('mgs_come',val.selectUser)
+  setTimeout(()=>{
+    if(messageCome == message_id){
+      if(val.mgs.trim() != ""){
+        let createDiv = document.createElement("div");
+            createDiv.classList.add("messLeft");
+            createDiv.innerHTML = `<p id="messRight_p">${val.mgs}</p>`;
+            mess_box.appendChild(createDiv);
+            document.getElementsByClassName("mess_box")[0].scrollBy(0, 400);
+            document.getElementsByClassName("mess_box")[0].style =
+            "scroll-behavior: smooth";
+      }
+    }
+  },400)
 
 })
 
 
 // send message to chient to server use onclick
-function sendMgs() {
-  socket.emit("user_message", {mgs:send.value,mainUser:correntLogin_id ,selectUser:message_id});
-  // socket.emit("user_message", send.value);
-  // send _id's
+function sendMgs() { 
+    // user message select & message come in live
 
+    socket.emit("user_message", {mgs:send.value,mainUser:correntLogin_id ,selectUser:message_id});
   // send message data in backen use fech post request
   fetch("http://localhost/mgs", {
     method: "post",
@@ -179,11 +185,29 @@ let getApi = async (search) => {
           value._id
         );
       }
+      // active user style
+      socket.on('activeUser',val=>{
+       document.getElementById(val).classList.add('user_active')
+      })
+      // inActive user style
+      socket.on('inActiveUser',val=>{
+        //console.log(val)  // =====
+        document.getElementById(val).classList.remove('user_active')
+       })
+      // mgs come form user style
+      socket.on('mgs_come_val',val=>{
+        if(value._id == val){
+          messageCome = val;
+          //console.log(val) // =====
+          document.getElementById(val).style.backgroundColor = 'lightgreen'
+        }
+      })
     });
   } catch (err) {
     alert("possibly the prooblem is Fetch URL error or mongodb server off");
     console.log(err);
   }
+  
 };
 getApi();
 // search user name
@@ -216,6 +240,7 @@ function appendFile(userName, gmail, file, index, display, rName) {
         `findSpacifyUser('${userName}','${gmail}','${file}','${rName}','${index}','block')`
       );
       cU_f.setAttribute("class", "new_tr");
+      cU_f.setAttribute("id", rName);
       cU_f.innerHTML = `
           <img src="uploads/${file}">
           <td class="temparary">${userName}</td>
@@ -233,6 +258,7 @@ function appendFile(userName, gmail, file, index, display, rName) {
         `findSpacifyUser('${userName}','${gmail}','${file}','${rName}','${index}'),setTimeout(()=>{style = 'background-color:gray'},100)`
       );
       cU.setAttribute("class", "new_tr");
+      cU.setAttribute("id", rName);
       cU.innerHTML = `
       <img src="uploads/${file}">
           <td>${userName}</td>
@@ -336,4 +362,19 @@ let mgsBlockLeft = document.querySelectorAll('.messLeft');
   serarchUser.value = "";
   serarchUser.style.display = "none";
   document.getElementsByClassName("find_box")[0].style.display = "none";
+
+  // responsive section
+  
+  if (window.matchMedia('(max-width: 750px)').matches){
+    left_section.style.display  = 'none';
+  }else if (window.matchMedia('(min-width: 749px)').matches){
+    left_section.style.display = 'block';
+    right_section.style.display = 'blcok'
+ } 
 }
+function previousSection(){
+  if (window.matchMedia('(max-width: 750px)').matches){
+    left_section.style.display = 'block';
+    right_section.style.display = 'none'
+  } 
+  }
