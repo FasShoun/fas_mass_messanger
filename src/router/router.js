@@ -27,8 +27,8 @@ router.get('/logout',logout,((req,res)=>{
 router.get('/user:789',(req,res)=>{
     res.render("user",{title:title});
 });
-router.get('/api:789', dataApi,((req,res)=>{}));
-//router.get('/api/user/mgs:789', mgsApi,((req,res)=>{}));
+//router.get('/api:789', dataApi,((req,res)=>{}));
+router.get('/api/user/mgs:789', mgsApi,((req,res)=>{}));
 
 // --post mathod
 router.post("/create",createAccountRequire,((req,res)=>{}));
